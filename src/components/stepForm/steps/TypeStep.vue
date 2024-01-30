@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StepWrapper from "./components/StepWrapper.vue";
-import {ref} from "vue";
+import {useFormStepStore} from "../formStore.ts";
 
-const value = ref<string | null>(null);
+const store = useFormStepStore()
 
 </script>
 
@@ -10,15 +10,15 @@ const value = ref<string | null>(null);
   <StepWrapper>
     <label>
       Humanoïde
-      <input type="radio" name="type" value="human"  v-model="value"/>
+      <input type="radio" name="type" value="human"  v-model="store.type"/>
     </label>
     <label>
       IA
-      <input type="radio" name="type" value="ia" v-model="value" />
+      <input type="radio" name="type" value="ia" v-model="store.type" />
     </label>
     <label>
       Cybord
-      <input type="radio" name="type" value="cyborg"  v-model="value"/>
+      <input type="radio" name="type" value="cyborg"  v-model="store.type"/>
     </label>
   </StepWrapper>
 </template>
