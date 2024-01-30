@@ -1,5 +1,8 @@
 <script setup lang="ts">
-defineProps<{
+import {useMouseInElement} from "@vueuse/core";
+import {computed, ref} from "vue";
+
+const props = defineProps<{
   name: string
   value: string
   modelValue: string | null
@@ -8,10 +11,26 @@ defineProps<{
 defineEmits<{
   (e: 'update:modelValue', value: string): void
 }>()
+
+const target = ref(null)
+
+const isChecked = computed(() => {
+  return props.value === props.modelValue
+})
+
+const { elementX, elementY } = useMouseInElement(target)
+
+const style = computed(() => {
+  if(!isChecked.value) return null
+  return {
+    '--mouse-x': `${elementX.value}px`,
+    '--mouse-y': `${elementY.value}px`,
+  }
+})
 </script>
 
 <template>
-  <label class="step-radio">
+  <label class="step-radio" ref="target" :style="style">
     <svg width="300" height="250" viewBox="0 0 300 250" class="step-radio__foreground">
       <defs>
 
@@ -58,7 +77,7 @@ defineEmits<{
         type="radio"
         name="connexion"
         value="wifi"
-        :checked="value === modelValue"
+        :checked="isChecked"
         @change="$emit('update:modelValue', value)"
     />
   </label>
@@ -102,12 +121,19 @@ defineEmits<{
     align-items: center;
     justify-content: center;
     height: 140px;
+    transform: translate(calc(var(--mouse-x) * 0.04), calc(var(--mouse-y) * 0.04));
+    transition: transform 0.1s ease-out;
 
     :deep(img) {
       width: 100%;
       height: 100%;
       object-fit: contain;
     }
+  }
+
+  &__description {
+    transform: translate(calc(var(--mouse-x) * 0.05), calc(var(--mouse-y) * 0.05));
+    transition: transform 0.1s ease-out;
   }
 
   &__border1 {
