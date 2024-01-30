@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import {ref} from "vue";
-
 defineProps<{
   name: string
   value: string
@@ -10,26 +8,6 @@ defineProps<{
 defineEmits<{
   (e: 'update:modelValue', value: string): void
 }>()
-
-type Rectangle = {
-  width: number
-  height: number
-  x: number
-  y: number
-}
-
-const possibleRectangles: Rectangle[] = [
-  {width: 240, height: 240, x: 30, y: 15},
-  {width: 260, height: 220, x: 20, y: 30 },
-  {width: 240, height: 240, x: 30, y: 20},
-  {width: 240, height: 230, x: 40, y: 20}
-]
-
-function generateRandomRectangle() : Rectangle {
-  return possibleRectangles[Math.floor(Math.random() * possibleRectangles.length)]
-}
-
-const rectangle1 = generateRandomRectangle()
 </script>
 
 <template>
@@ -60,7 +38,7 @@ const rectangle1 = generateRandomRectangle()
 
       </defs>
       <!-- rectangle borders -->
-      <rect :width="rectangle1.width" :height="rectangle1.height" :x="rectangle1.x" :y="rectangle1.y" fill="none" stroke="var(--color)" class="step-radio__border1" stroke-width="2" filter="url(#sofGlow)" />
+      <rect width="240" height="230" x="30" y="20" fill="none" stroke="var(--color)" class="step-radio__border1" stroke-width="2" filter="url(#sofGlow)" />
       <rect width="250" height="220" x="25" y="25" fill="none" stroke="var(--color)" class="step-radio__border2" stroke-width="2" />
       <foreignObject class="step-radio__icon" width="100" height="100" x="100" y="50">
         <slot name="icon"/>
@@ -103,7 +81,7 @@ const rectangle1 = generateRandomRectangle()
   &__border1 {
     stroke-dasharray: calc(300 * 4);
     stroke-dashoffset: calc(300 * 4);
-    transition: stroke-dashoffset 0.5s ease-out;
+    transition: stroke-dashoffset 0.3s ease-out;
   }
 
 
