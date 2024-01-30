@@ -2,6 +2,7 @@
 import { computed, ref} from "vue";
 import {formSteps} from "./formSteps.ts";
 import {useFormStepStore} from "./formStore.ts";
+import StepButton from "./StepButton.vue";
 
 const currentStepIndex = ref<number>(0);
 const mode = ref<"next" | "previous">("next");
@@ -47,9 +48,9 @@ defineEmits<{
     </transition>
   </div>
   <div class="step-form__actions">
-    <button type="button" @click="goToPreviousStep" :disabled="!hasPreviousStep">Précédent</button>
-    <button type="button" @click="goToNextStep" v-if="hasNextStep">Suivant</button>
-    <button type="button" @click="$emit('submit')" v-else :disabled="!store.isValid">Envoyer</button>
+    <StepButton type="button" @click="goToPreviousStep" :disabled="!hasPreviousStep">Précédent</StepButton>
+    <StepButton type="button" @click="goToNextStep" v-if="hasNextStep" variant="solid">Suivant</StepButton>
+    <StepButton type="button" @click="$emit('submit')" v-else :disabled="!store.isValid" variant="solid">Envoyer</StepButton>
   </div>
 </div>
 </template>
@@ -94,6 +95,13 @@ defineEmits<{
     justify-content: center;
     align-items: center;
     overflow: hidden;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0 1rem;
   }
 }
 </style>
