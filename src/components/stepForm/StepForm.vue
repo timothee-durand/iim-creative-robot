@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { computed, ref} from "vue";
 import {formSteps} from "./formSteps.ts";
+import {useFormStepStore} from "./formStore.ts";
 
 const currentStepIndex = ref<number>(0);
 const mode = ref<"next" | "previous">("next");
+
+const store = useFormStepStore()
 
 const hasPreviousStep = computed(() => {
   return currentStepIndex.value > 0;
@@ -30,6 +33,10 @@ function goToPreviousStep() {
 const currentStep = computed(() => {
   return formSteps[currentStepIndex.value];
 });
+
+defineEmits<{
+  (event: "submit"): void
+}>()
 </script>
 
 <template>
@@ -40,8 +47,9 @@ const currentStep = computed(() => {
     </transition>
   </div>
   <div class="step-form__actions">
-    <button type="button" @click="goToPreviousStep" :disabled="!hasPreviousStep">Previous</button>
-    <button type="button" @click="goToNextStep" :disabled="!hasNextStep">Next</button>
+    <button type="button" @click="goToPreviousStep" :disabled="!hasPreviousStep">Précédent</button>
+    <button type="button" @click="goToNextStep" v-if="hasNextStep">Suivant</button>
+    <button type="button" @click="$emit('submit')" v-else :disabled="!store.isValid">Envoyer</button>
   </div>
 </div>
 </template>

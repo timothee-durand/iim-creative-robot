@@ -10,6 +10,10 @@ export const useFormStepStore = defineStore('form', {
         type: null,
         connexion: null
     }),
-    getters: {},
+    getters: {
+        isValid(state) {
+            return state.type !== null && state.connexion !== null
+        }
+    },
     actions: {},
 })
