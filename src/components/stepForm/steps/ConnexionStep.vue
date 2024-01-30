@@ -13,7 +13,7 @@ const NAME = 'connexion'
     </template>
     <RadioInput :name="NAME" v-model="store.connexion" value="wifi">
       <template #icon>
-        <img src="./vue.svg">
+        <img src="./components/vue.svg">
       </template>
       <template #description>
         Wifi
@@ -21,7 +21,7 @@ const NAME = 'connexion'
     </RadioInput>
     <RadioInput :name="NAME" v-model="store.connexion" value="jack">
       <template #icon>
-        <img src="./vue.svg">
+        <img src="./components/vue.svg">
       </template>
       <template #description>
         Jack
@@ -29,7 +29,7 @@ const NAME = 'connexion'
     </RadioInput>
     <RadioInput :name="NAME" v-model="store.connexion" value="bluetooth">
       <template #icon>
-        <img src="./vue.svg">
+        <img src="./components/vue.svg">
       </template>
       <template #description>
         Bluetooth

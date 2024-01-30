@@ -2,38 +2,37 @@
 import StepWrapper from "./components/StepWrapper.vue";
 import {useFormStepStore} from "../formStore.ts";
 import RadioInput from "./components/RadioInput.vue";
-
 const store = useFormStepStore()
-const NAME = 'type'
+const NAME = 'processeur'
 </script>
 
 <template>
   <StepWrapper>
     <template #question>
-      Quel type de robot êtes-vous ?
+      Quel type de connexion avez-vous ?
     </template>
-    <RadioInput :name="NAME" v-model="store.type" value="human">
+    <RadioInput :name="NAME" v-model="store.processeur" value="eco-logic">
       <template #icon>
         <img src="./components/vue.svg">
       </template>
       <template #description>
-        Humanoïde
+        EcoLogic Processor Z3
       </template>
     </RadioInput>
-    <RadioInput :name="NAME" v-model="store.type" value="ia">
+    <RadioInput :name="NAME" v-model="store.processeur" value="virtu-sync">
       <template #icon>
         <img src="./components/vue.svg">
       </template>
       <template #description>
-        IA
+        VirtuSync PentaCore 360
       </template>
     </RadioInput>
-    <RadioInput :name="NAME" v-model="store.type" value="cyborg">
+    <RadioInput :name="NAME" v-model="store.processeur" value="hyper-thread">
       <template #icon>
         <img src="./components/vue.svg">
       </template>
       <template #description>
-        Cyborg
+        HyperThread Titan XJ-3
       </template>
     </RadioInput>
   </StepWrapper>
