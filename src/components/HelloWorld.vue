@@ -1,35 +1,35 @@
 <template>
   <h1>Test couleurs</h1>
 
-  <div class="card" :class="selectedColor">
+  <div class="questions-container" :style="{ 'background-color': store.background }">
     <div v-for="option in options" :key="option.id">
-      <input type="radio" :value="option.class" v-model="selectedColor" @change="updateSelectedColor">
+      <input type="radio" :value="option.value" v-model="selectedColor" @change="updateSelectedColor(option.value)">
       <label>{{ option.label }}</label>
     </div>
   </div>
 </template>
 
 <script>
-import { useStore } from './styleStore.js';
+import { useStore } from './styleStore.ts';
 
 export default {
   setup() {
     const store = useStore();
 
     const options = [
-      { id: 1, label: 'Rose', class: 'background-sexe' },
-      { id: 2, label: 'Bleu', class: 'background-friend' },
-      { id: 3, label: 'Vert', class: 'background-love'}
-      // Ajoutez d'autres options de couleur au besoin
+      { id: 1, label: 'Rose', value: 'var(--background-color-wifi)' },
+      { id: 2, label: 'Bleu', value: 'var(--background-color-jack)' },
+      { id: 3, label: 'Vert', value: 'var(--background-color-bluetooth)'}
     ];
 
-    const selectedColor = store.selectedColor;
+    let selectedColor = store.background;
 
     const updateSelectedColor = (color) => {
-      store.setSelectedColor(color);
+      selectedColor = color;
+      store.setBackground(color);
     };
 
-    return { options, selectedColor, updateSelectedColor };
+    return { options, store, selectedColor, updateSelectedColor };
   }
 };
 </script>

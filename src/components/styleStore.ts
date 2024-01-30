@@ -3,11 +3,23 @@ import { defineStore } from 'pinia';
 
 export const useStore = defineStore('store', {
     state: () => ({
-        selectedColor: 'background-love' // Couleur par défaut
+        background: 'var(--background-color-wifi)', // Couleurs de fond
+        size : '',
+        animation: '',
+        britness: '',
     }),
     actions: {
-        setSelectedColor(color: string) {
-            this.selectedColor = color;
-        }
+        setBackground(color: string) {
+            this.background = color;
+        },
+        setSize(text: string) {
+            this.size = text;
+        },
+        setAnimation(speed: string) {
+            this.background = speed;
+        },
+        setBritness(brit: number) {
+            this.background = brit;
+        },
     }
 });

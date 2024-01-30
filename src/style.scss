@@ -1,20 +1,49 @@
 :root {
-  --background-color-love: green;
-  --background-color-sexe: pink;
-  --background-color-friend: blue;
+  --background-color-wifi: #1D8328;
+  --background-color-jack: #CC33CA;
+  --background-color-bluetooth: #9087F6;
 
-  --text-s: 1rem;
-  --size-m: 2rem;
-  --size-l: 3rem;
+  --size-jack: 1rem;
+  --size-usb: 2rem;
+  --size-rj: 3rem;
+
+  --animation-time-ecologic: '';
+  --animation-time-virtusync: '';
+  --animation-time-hyperthread: '';
+
+  --britness: '';
 }
-/* Ajoutez d'autres classes pour les couleurs au besoin */
+
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Chakra+Petch:wght@700&family=IBM+Plex+Mono:wght@300&family=Orbitron:wght@700&display=swap');
+
+.font-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.font-robotic {
+  font-family: 'Orbitron', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.font-hybrid {
+  font-family: 'Chakra Petch', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.font-humain {
+  font-family: 'Bungee', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+}
 
 body {
   margin: 0;
   display: flex;
   place-items: center;
-  font-size: var(--size-m);
-  background-color: var(--background-color-love);
 }
 
 a {
