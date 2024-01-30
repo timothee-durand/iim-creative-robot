@@ -4,7 +4,12 @@
 
 <template>
   <div class="step">
-    <slot/>
+    <div class="step__question">
+      <slot name="question"/>
+    </div>
+    <div class="step__input">
+      <slot/>
+    </div>
   </div>
 </template>
 

@@ -6,6 +6,9 @@ const store = useFormStepStore()
 
 <template>
   <StepWrapper>
+    <template #question>
+      Quel type de connexion avez-vous ?
+    </template>
     <label>
       Wifi
       <input type="radio" name="connexion" value="wifi"  v-model="store.connexion"/>

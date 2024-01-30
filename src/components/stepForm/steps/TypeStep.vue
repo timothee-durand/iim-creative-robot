@@ -8,6 +8,9 @@ const store = useFormStepStore()
 
 <template>
   <StepWrapper>
+    <template #question>
+      Quel type de robot êtes-vous ?
+    </template>
     <label>
       Humanoïde
       <input type="radio" name="type" value="human"  v-model="store.type"/>
