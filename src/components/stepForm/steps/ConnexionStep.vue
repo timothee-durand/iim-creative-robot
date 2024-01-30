@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import StepWrapper from "./components/StepWrapper.vue";
 import {useFormStepStore} from "../formStore.ts";
+import RadioInput from "./components/RadioInput.vue";
 const store = useFormStepStore()
+const NAME = 'connexion'
 </script>
 
 <template>
@@ -9,18 +11,21 @@ const store = useFormStepStore()
     <template #question>
       Quel type de connexion avez-vous ?
     </template>
-    <label>
-      Wifi
-      <input type="radio" name="connexion" value="wifi"  v-model="store.connexion"/>
-    </label>
-    <label>
-      Jack
-      <input type="radio" name="connexion" value="jack" v-model="store.connexion" />
-    </label>
-    <label>
-      Bluetooth
-      <input type="radio" name="connexion" value="bluetooth"  v-model="store.connexion"/>
-    </label>
+    <RadioInput :name="NAME" v-model="store.connexion" value="wifi">
+      <template #description>
+        Wifi
+      </template>
+    </RadioInput>
+    <RadioInput :name="NAME" v-model="store.connexion" value="jack">
+      <template #description>
+        Jack
+      </template>
+    </RadioInput>
+    <RadioInput :name="NAME" v-model="store.connexion" value="bluetooth">
+      <template #description>
+        Bluetooth
+      </template>
+    </RadioInput>
   </StepWrapper>
 </template>
 

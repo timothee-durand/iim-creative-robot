@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import StepWrapper from "./components/StepWrapper.vue";
 import {useFormStepStore} from "../formStore.ts";
+import RadioInput from "./components/RadioInput.vue";
 
 const store = useFormStepStore()
-
+const NAME = 'type'
 </script>
 
 <template>
@@ -11,18 +12,21 @@ const store = useFormStepStore()
     <template #question>
       Quel type de robot êtes-vous ?
     </template>
-    <label>
-      Humanoïde
-      <input type="radio" name="type" value="human"  v-model="store.type"/>
-    </label>
-    <label>
-      IA
-      <input type="radio" name="type" value="ia" v-model="store.type" />
-    </label>
-    <label>
-      Cybord
-      <input type="radio" name="type" value="cyborg"  v-model="store.type"/>
-    </label>
+    <RadioInput :name="NAME" v-model="store.type" value="human">
+      <template #description>
+        Humanoïde
+      </template>
+    </RadioInput>
+    <RadioInput :name="NAME" v-model="store.type" value="ia">
+      <template #description>
+        IA
+      </template>
+    </RadioInput>
+    <RadioInput :name="NAME" v-model="store.type" value="cyborg">
+      <template #description>
+        Cyborg
+      </template>
+    </RadioInput>
   </StepWrapper>
 </template>
 
