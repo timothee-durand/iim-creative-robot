@@ -7,20 +7,6 @@
   --size-m: 2rem;
   --size-l: 3rem;
 }
-/* styles.css */
-
-.background-love {
-  background-color: green;
-}
-
-.background-sexe {
-  background-color: pink;
-}
-
-.background-friend {
-  background-color: blue;
-}
-
 /* Ajoutez d'autres classes pour les couleurs au besoin */
 
 body {
@@ -28,7 +14,7 @@ body {
   display: flex;
   place-items: center;
   font-size: var(--size-m);
-  background-color: pink;
+  background-color: var(--background-color-love);
 }
 
 a {
