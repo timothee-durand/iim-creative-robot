@@ -42,6 +42,10 @@ defineEmits<{
     border: 1px solid var(--button-color);
   }
 
+  &:disabled {
+    opacity: 0.6;
+  }
+
   span {
     position: absolute;
     display: block;

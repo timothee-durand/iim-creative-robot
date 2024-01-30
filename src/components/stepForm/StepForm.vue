@@ -88,6 +88,8 @@ defineEmits<{
   min-height: 70vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+
 
   &__steps {
     flex-grow: 2;
