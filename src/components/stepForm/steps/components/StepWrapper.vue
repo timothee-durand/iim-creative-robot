@@ -13,6 +13,12 @@
   </div>
 </template>
 
-<style scoped>
-
+<style scoped lang="scss">
+.step {
+  &__input {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
 </style>

@@ -12,16 +12,25 @@ const NAME = 'connexion'
       Quel type de connexion avez-vous ?
     </template>
     <RadioInput :name="NAME" v-model="store.connexion" value="wifi">
+      <template #icon>
+        <img src="./vue.svg">
+      </template>
       <template #description>
         Wifi
       </template>
     </RadioInput>
     <RadioInput :name="NAME" v-model="store.connexion" value="jack">
+      <template #icon>
+        <img src="./vue.svg">
+      </template>
       <template #description>
         Jack
       </template>
     </RadioInput>
     <RadioInput :name="NAME" v-model="store.connexion" value="bluetooth">
+      <template #icon>
+        <img src="./vue.svg">
+      </template>
       <template #description>
         Bluetooth
       </template>

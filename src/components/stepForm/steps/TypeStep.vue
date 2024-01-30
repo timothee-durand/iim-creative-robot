@@ -13,16 +13,25 @@ const NAME = 'type'
       Quel type de robot êtes-vous ?
     </template>
     <RadioInput :name="NAME" v-model="store.type" value="human">
+      <template #icon>
+        <img src="./vue.svg">
+      </template>
       <template #description>
         Humanoïde
       </template>
     </RadioInput>
     <RadioInput :name="NAME" v-model="store.type" value="ia">
+      <template #icon>
+        <img src="./vue.svg">
+      </template>
       <template #description>
         IA
       </template>
     </RadioInput>
     <RadioInput :name="NAME" v-model="store.type" value="cyborg">
+      <template #icon>
+        <img src="./vue.svg">
+      </template>
       <template #description>
         Cyborg
       </template>
