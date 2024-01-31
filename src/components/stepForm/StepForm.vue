@@ -48,9 +48,9 @@ defineEmits<{
     </transition>
   </div>
   <div class="step-form__actions">
-    <StepButton type="button" @click="goToPreviousStep" :disabled="!hasPreviousStep">Précédent</StepButton>
-    <StepButton type="button" @click="goToNextStep" v-if="hasNextStep" variant="solid">Suivant</StepButton>
-    <StepButton type="button" @click="$emit('submit')" v-else :disabled="!store.isValid" variant="solid">Envoyer</StepButton>
+    <StepButton type="button" @click="goToPreviousStep" :disabled="!hasPreviousStep">Back</StepButton>
+    <StepButton type="button" @click="goToNextStep" v-if="hasNextStep" variant="solid">Next</StepButton>
+    <StepButton type="button" @click="$emit('submit')" v-else :disabled="!store.isValid" variant="solid">Submit</StepButton>
   </div>
 </div>
 </template>

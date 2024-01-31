@@ -10,7 +10,7 @@ export const formSteps: Component[] = [
     IdentityStep,
     TypeStep,
     ConnexionStep,
-    PortStep,
     ProcesseurStep,
+    PortStep,
     AutonomyStep
 ]

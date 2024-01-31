@@ -2,13 +2,14 @@
 import StepWrapper from "../components/StepWrapper.vue";
 import {useFormStepStore} from "../../formStore.ts";
 import Robot from "./robot.vue";
+import TitleNeon from "../../../base/TitleNeon.vue";
 const store = useFormStepStore()
 </script>
 
 <template>
 <StepWrapper class="identity">
   <template #question>
-    IDENTITY
+    <TitleNeon tag="h3" text="Identity" />
   </template>
   <template #description>
     Initiate the registration of your identity.
