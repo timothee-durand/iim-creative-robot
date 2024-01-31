@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useMouseInElement} from "@vueuse/core";
-import {computed, ref} from "vue";
+import {computed, ref, watchEffect} from "vue";
 
 const props = defineProps<{
   name: string
@@ -8,21 +8,33 @@ const props = defineProps<{
   modelValue: string | null
 }>()
 
+const circlePos = ref({x: 0, y: 0})
+
 defineEmits<{
   (e: 'update:modelValue', value: string): void
 }>()
 
-const target = ref(null)
+const wrapper = ref(null)
+const background = ref(null)
 
 const isChecked = computed(() => {
   return props.value === props.modelValue
 })
 
-const {elementX, elementY} = useMouseInElement(target)
+const {elementX, elementY} = useMouseInElement(wrapper)
+const {elementX : bgElementX, elementY: bgElementY} = useMouseInElement(background)
+
+watchEffect(() => {
+  if (!isChecked.value) {
+    circlePos.value = {x: bgElementX.value, y: bgElementY.value}
+  }
+})
+
 
 const style = computed(() => {
-  if (!isChecked.value) return null
-  return {
+  return  {
+    '--circle-pos-x': `${circlePos.value.x}px`,
+    '--circle-pos-y': `${circlePos.value.y}px`,
     '--mouse-x': `${elementX.value}px`,
     '--mouse-y': `${elementY.value}px`,
   }
@@ -30,7 +42,7 @@ const style = computed(() => {
 </script>
 
 <template>
-  <label class="step-radio" ref="target" :style="style">
+  <label class="step-radio" ref="wrapper" :style="style">
     <svg width="300" height="250" viewBox="0 0 300 250" class="step-radio__foreground">
       <defs>
 
@@ -71,6 +83,7 @@ const style = computed(() => {
       <span class="step-radio__description">
         <slot name="description"/>
       </span>
+      <span class="step-radio__foreground__background" ref="background"></span>
     </span>
 
 
@@ -93,6 +106,8 @@ const style = computed(() => {
   --color: #CC33CA;
   width: fit-content;
   height: fit-content;
+  position: relative;
+
 
   &__background, &__foreground {
     grid-area: 1/-1;
@@ -104,6 +119,27 @@ const style = computed(() => {
     align-self: center;
     justify-self: center;
     gap: 0.8rem;
+
+    &__background{
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      width: 240px;
+      height: 210px;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: color-mix(in srgb, var(--color), black 70%);
+        clip-path: circle(0% at var(--circle-pos-x) var(--circle-pos-y));
+        transition: clip-path ease-out 300ms;
+      }
+    }
   }
 
 
@@ -112,17 +148,33 @@ const style = computed(() => {
     .step-radio__border1 {
       stroke-dashoffset: 0;
     }
+
+    .step-radio__foreground__background::before {
+      clip-path: circle(200% at var(--circle-pos-x) var(--circle-pos-y) );
+    }
+
+    .step-radio__icon {
+      transform: translate3d(calc(var(--mouse-x) * 0.04), calc(var(--mouse-y) * 0.04), 0);
+    }
+
+    .step-radio__description {
+      transform: translate3d(calc(var(--mouse-x) * 0.05), calc(var(--mouse-y) * 0.05), 0);
+    }
   }
 
   &__input {
     display: none;
   }
 
+  &__icon, &__description {
+    position: relative;
+    z-index: 1;
+  }
+
   &__icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translate(calc(var(--mouse-x) * 0.04), calc(var(--mouse-y) * 0.04));
     transition: transform 0.1s ease-out;
 
     :deep(img) {
@@ -133,7 +185,6 @@ const style = computed(() => {
   }
 
   &__description {
-    transform: translate(calc(var(--mouse-x) * 0.05), calc(var(--mouse-y) * 0.05));
     transition: transform 0.1s ease-out;
     max-width: 200px;
   }
@@ -148,6 +199,11 @@ const style = computed(() => {
   &:hover {
     .step-radio__border1 {
       stroke-dashoffset: 0;
+    }
+
+    &:not(:has(:checked)) .step-radio__foreground__background::before {
+      clip-path: circle(5% at var(--circle-pos-x) var(--circle-pos-y));
+      transition-duration: 150ms;
     }
   }
 }
