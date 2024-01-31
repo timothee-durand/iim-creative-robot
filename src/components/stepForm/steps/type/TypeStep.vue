@@ -13,9 +13,9 @@ const NAME = 'type'
       Preference
     </template>
     <template #description>
-      Choose the preferred body organism type for optimal functionality. Specify the materials, forms, and aesthetic
-      features that align with your preferences. This selection will not only enhance your physical compatibility but
-      also contribute to refining the algorithm's ability to identify suitable matches.
+      Choose the preferred <b>body organism type</b> for optimal functionality. Specify the materials, forms, and aesthetic
+      features that align with your preferences. This selection will not only enhance your <b>physical compatibility</b> but
+      also contribute to refining the algorithm's ability to <b>identify suitable matches</b>.
     </template>
     <RadioInput :name="NAME" v-model="store.type" value="human">
       <template #icon>
@@ -45,5 +45,7 @@ const NAME = 'type'
 </template>
 
 <style scoped>
-
+img {
+  max-width: 120px;
+}
 </style>

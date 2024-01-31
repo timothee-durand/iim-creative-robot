@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import StepWrapper from "./components/StepWrapper.vue";
-import {useFormStepStore} from "../formStore.ts";
+import StepWrapper from "../components/StepWrapper.vue";
+import {useFormStepStore} from "../../formStore.ts";
 const store = useFormStepStore()
 </script>
 

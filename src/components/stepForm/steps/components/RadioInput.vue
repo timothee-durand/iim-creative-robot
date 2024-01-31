@@ -18,10 +18,10 @@ const isChecked = computed(() => {
   return props.value === props.modelValue
 })
 
-const { elementX, elementY } = useMouseInElement(target)
+const {elementX, elementY} = useMouseInElement(target)
 
 const style = computed(() => {
-  if(!isChecked.value) return null
+  if (!isChecked.value) return null
   return {
     '--mouse-x': `${elementX.value}px`,
     '--mouse-y': `${elementY.value}px`,
@@ -57,8 +57,10 @@ const style = computed(() => {
 
       </defs>
       <!-- rectangle borders -->
-      <rect width="240" height="230" x="30" y="20" fill="none" stroke="var(--color)" class="step-radio__border1" stroke-width="2" filter="url(#sofGlow)" />
-      <rect width="250" height="220" x="25" y="25" fill="none" stroke="var(--color)" class="step-radio__border2" stroke-width="2" />
+      <rect width="240" height="220" x="30" y="15" fill="none" stroke="var(--color)" class="step-radio__border1"
+            stroke-width="2" filter="url(#sofGlow)"/>
+      <rect width="250" height="210" x="25" y="20" fill="none" stroke="var(--color)" class="step-radio__border2"
+            stroke-width="2"/>
     </svg>
 
     <span class="step-radio__foreground">
@@ -101,7 +103,7 @@ const style = computed(() => {
     flex-direction: column;
     align-self: center;
     justify-self: center;
-    gap:0.4rem;
+    gap: 0.8rem;
   }
 
 
@@ -120,7 +122,6 @@ const style = computed(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 140px;
     transform: translate(calc(var(--mouse-x) * 0.04), calc(var(--mouse-y) * 0.04));
     transition: transform 0.1s ease-out;
 
@@ -134,6 +135,7 @@ const style = computed(() => {
   &__description {
     transform: translate(calc(var(--mouse-x) * 0.05), calc(var(--mouse-y) * 0.05));
     transition: transform 0.1s ease-out;
+    max-width: 200px;
   }
 
   &__border1 {
