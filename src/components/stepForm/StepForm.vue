@@ -85,7 +85,7 @@ defineEmits<{
 }
 
 .step-form {
-  min-height: 70vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -103,7 +103,7 @@ defineEmits<{
     display: flex;
     justify-content: center;
     gap: 1rem;
-    padding: 0 1rem;
+    padding: 0 1rem 6rem;
   }
 }
 </style>
