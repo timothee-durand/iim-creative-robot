@@ -18,7 +18,7 @@ export const useFormStepStore = defineStore('form', {
     }),
     getters: {
         isValid(state) {
-            return state.type !== null && state.connexion !== null
+            return state.type !== null && state.connexion !== null && state.port !== null && state.processeur !== null && state.autonomy !== null
         }
     },
     actions: {},
