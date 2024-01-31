@@ -1,5 +1,5 @@
 <template>
-  <h1>Test couleurs</h1>
+  <TitleNeon text="Profil"  tag="h2"/>
 
   <div class="questions-container" :style="{ 'background-color': store.background }">
     <div v-for="option in options" :key="option.id">
@@ -11,8 +11,10 @@
 
 <script>
 import { useStore } from './styleStore.ts';
+import TitleNeon from "./TitleNeon.vue";
 
 export default {
+  components: {TitleNeon},
   setup() {
     const store = useStore();
 
