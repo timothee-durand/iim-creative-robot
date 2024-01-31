@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.3.11"
+    "swing": "^3.1.4",
+    "vue": "^3.3.11",
+    "vue3-swipe-actions": "^0.0.1",
+    "vue3-touch-events": "^4.1.8"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",
