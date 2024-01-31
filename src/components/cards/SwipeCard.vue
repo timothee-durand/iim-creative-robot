@@ -1,17 +1,22 @@
 
 <script lang="ts">
-
+import Flux from './Flux.vue';
 
 export default {
     
+    components:{
+        Flux
+    },
+
     data() {
         return {
+        isAnimating: false,
         currentCardIndex: 0,
         cards: [
-            { title: 'IDTA-734965', description: 'Description 1', imageSrc: '../../public/imgCard1.png', showDetails: false, showImage: true, type: 'Robotic', processor: 'EcoLogic Processor Z3',connection:'Wi-Fi', connectionSrc: '../../public/wifi.svg', port : 'USB', energyAutonomy: '48h'},
-            { title: 'RXTA-827391', description: 'Description 2', imageSrc: '../../public/face2.png', showDetails: false, showImage: true, type: 'Cyborg', processor: 'HyperThread Titan XJ-3', connection:'Wi-Fi',connectionSrc: '../../public/bluetooth.svg', port : 'JACK', energyAutonomy: '12h' },
-            { title: 'JNDA-502748', description: 'Description 3', imageSrc: '../../public/face3.jpeg', showDetails: false, showImage: true, type: 'AI', processor: 'VirtuSync PentaCore 360 ',connection:'Wi-Fi' ,connectionSrc: '../../public/wired.svg', port : 'RJ45', energyAutonomy: '24h'},
-            { title: 'QLZA-416830', description: 'Description 4', imageSrc: '../../public/face4.jpg', showDetails: false, showImage: true, type: 'Cyborg', processor: 'EcoLogic Processor Z3',connection:'Wi-Fi' ,connectionSrc: '../../public/bluetooth.svg', port : 'RJ45', energyAutonomy: '8h'},
+            { title: 'IDTA-734965', description: 'Description 1', imageSrc: 'imgCard1.png', showDetails: false, showImage: true, type: 'Robotic', processor: 'EcoLogic Processor Z3',connection:'Wi-Fi', connectionSrc: 'wifi.svg', port : 'USB', energyAutonomy: '48h'},
+            { title: 'RXTA-827391', description: 'Description 2', imageSrc: 'face2.png', showDetails: false, showImage: true, type: 'Cyborg', processor: 'HyperThread Titan XJ-3', connection:'Wi-Fi',connectionSrc: 'bluetooth.svg', port : 'JACK', energyAutonomy: '12h' },
+            { title: 'JNDA-502748', description: 'Description 3', imageSrc: 'face3.jpeg', showDetails: false, showImage: true, type: 'AI', processor: 'VirtuSync PentaCore 360 ',connection:'Wi-Fi' ,connectionSrc: 'wired.svg', port : 'RJ45', energyAutonomy: '24h'},
+            { title: 'QLZA-416830', description: 'Description 4', imageSrc: 'face4.jpg', showDetails: false, showImage: true, type: 'Cyborg', processor: 'EcoLogic Processor Z3',connection:'Wi-Fi' ,connectionSrc: 'bluetooth.svg', port : 'RJ45', energyAutonomy: '8h'},
 
         ],
         };
@@ -21,12 +26,20 @@ export default {
         swipeLeftHandler() {
             if (this.currentCardIndex < this.cards.length - 1) {
                 const currentCardSelector = `.card:nth-child(${this.currentCardIndex + 1})`;
+                const nextCardSelector = `.card:nth-child(${this.currentCardIndex + 2})`;
                 const currentCard = this.$el.querySelector(currentCardSelector) as HTMLElement;
+                const nextCard = this.$el.querySelector(nextCardSelector) as HTMLElement;
+                console.log(nextCard)
                 currentCard.classList.add('shrink-to-line');
                 setTimeout(() => {
                     currentCard.classList.remove('shrink-to-line');
+                    nextCard.classList.add('line-to-shrink');
                     this.currentCardIndex++;
-                }, 1000); // timeout should match transition duration
+                }, 4000); // timeout should match transition duration
+                this.isAnimating = true;
+                setTimeout(() => {
+                    this.isAnimating = false;
+                }, 4000);
             }
         },
         swipeRightHandler() {
@@ -37,7 +50,7 @@ export default {
                 setTimeout(() => {
                     currentCard.classList.remove('rotate-left');
                     this.currentCardIndex--;
-                }, 1000); // timeout should match transition duration
+                }, 2000); // timeout should match transition duration
             }
         },
         tapHandler() {
@@ -50,46 +63,51 @@ export default {
 </script>
 
 <template>
-    <div v-touch:swipe.left="swipeLeftHandler" v-touch:swipe.right="swipeRightHandler" v-touch:tap="tapHandler" class="card-container">
-      <div v-for="(card, index) in cards" :key="index" class="card " v-show="index === currentCardIndex">
-        <div class="card-content">
-            <img :src="card.imageSrc" alt="Card Image" />
-            <div class="card-text">
-                <div class="flex">
-                    <div class="flex-text">
-                        <h3>{{ card.title }}</h3>
-                        
-                        <img :src="card.connectionSrc" alt="" class="svgConn">
+    <div>
+        <Flux :animatePath="isAnimating"/>
+        <div v-touch:swipe.left="swipeLeftHandler" v-touch:swipe.right="swipeRightHandler" v-touch:tap="tapHandler" class="card-container">
+            <div v-for="(card, index) in cards" :key="index" :ref="`card-${index}`" class="card" v-show="index === currentCardIndex">
+            <div class="card-content">
+                <img :src="card.imageSrc" alt="Card Image" />
+                <div class="card-text">
+                    <div class="flex">
+                        <div class="flex-text">
+                            <h3>{{ card.title }}</h3>
+                            
+                            <img :src="card.connectionSrc" alt="" class="svgConn">
+                        </div>
+                        <img src="/leftAcces2.svg" alt="" class="svgRight">
                     </div>
-                    <img src="../../public/leftAcces2.svg" alt="" class="svgRight">
-                </div>
-                <div v-if="card.showDetails">
-                    <div class="detail-item">
-                        <span class="detail">
-                            Connection: {{ card.connection }}
-                        </span> 
+                    <div v-if="card.showDetails">
+                        <div class="detail-item">
+                            <span class="detail">
+                                Connection: {{ card.connection }}
+                            </span> 
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail">
+                                <p>CPU: {{ card.processor }}</p>
+                            </span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail">
+                                <p>Port: {{ card.port }}</p>
+                            </span>
+                        </div>
+                        <p>Energy Autonomy: {{ card.energyAutonomy }}</p>
+                        <!-- Add more details here as needed -->
                     </div>
-                    <div class="detail-item">
-                        <span class="detail">
-                            <p>CPU: {{ card.processor }}</p>
-                        </span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail">
-                            <p>Port: {{ card.port }}</p>
-                        </span>
-                    </div>
-                    <p>Energy Autonomy: {{ card.energyAutonomy }}</p>
-                    <!-- Add more details here as needed -->
                 </div>
             </div>
         </div>
-      </div>
+        </div>
     </div>
+    
   </template>
 
 <style scoped>
     .card-container {
+        margin-top: -255px !important;
         width: 360px;
         margin: 0 auto;
     }
@@ -101,7 +119,7 @@ export default {
         transition: transform 0.3s ease;
         padding: 23px; /* Adjust padding as needed */
         user-select: none;
-        background: url('../../public/border.svg') no-repeat center center; /* Path to your SVG */
+        background: url('border.svg') no-repeat center center; /* Path to your SVG */
         background-size: 100% 100%; /* Make the SVG fit the container */
         
     }
@@ -201,7 +219,7 @@ export default {
         bottom: 0;
         width: 10px; /* Adjust size as needed */
         height: 10px; /* Adjust size as needed */
-        background: url('../../public/cube.svg') no-repeat center center; /* Path to your cube SVG */
+        background: url('cube.svg') no-repeat center center; /* Path to your cube SVG */
         background-size: cover; /* Adjust as needed */
     }
 
@@ -210,19 +228,38 @@ export default {
         transform: scale(1);
         opacity: 1;
     }
-    50% {
-        transform: scaleY(0.10); /* Shrink height to almost a line */
+    50%{
+        transform: scaleX(0.5);
         opacity: 1;
     }
     100% {
-        transform: scaleY(0.01) translateY(-1000vh); /* Move the line to the top */
-        opacity: 0.1;
+        transform: scaleY(0) scaleX(0.5); /* Move the line to the top */
+        opacity: 0;
+    }
+    }
+    @keyframes shrinktoline {
+    0% {
+        transform: scaleY(0); /* Move the line to the top */
+        opacity: 0;
+    }
+    50% {
+        transform: scaleY(0.10); /* Shrink height to almost a line */
+        opacity: 0.5;
+    }
+    100% {
+        
+        transform: scale(1);
+        opacity: 1;
     }
     }
 
     .shrink-to-line {
     animation: shrinkToLineAndMoveUp 1s forwards;
     }
+    .line-to-shrink {
+    animation: shrinktoline 1s forwards;
+    }
+    
 
     
 

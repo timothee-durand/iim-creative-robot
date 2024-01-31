@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SwipeCard from './components/SwipeCard.vue';
+import SwipeCard from './components/cards/SwipeCard.vue';
 </script>
 
 <template>
