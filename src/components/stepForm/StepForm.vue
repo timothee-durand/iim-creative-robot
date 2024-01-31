@@ -35,6 +35,11 @@ const currentStep = computed(() => {
   return formSteps[currentStepIndex.value];
 });
 
+const isFalling = ref(false)
+const animHeart = () => {
+  isFalling.value = true;
+}
+
 defineEmits<{
   (event: "submit"): void
 }>()
@@ -51,6 +56,9 @@ defineEmits<{
     <StepButton type="button" @click="goToPreviousStep" :disabled="!hasPreviousStep">Back</StepButton>
     <StepButton type="button" @click="goToNextStep" v-if="hasNextStep" variant="solid">Next</StepButton>
     <StepButton type="button" @click="$emit('submit')" v-else :disabled="!store.isValid" variant="solid">Submit</StepButton>
+  </div>
+  <div class="svg-container" :class="{ 'falling': isFalling }">
+    <img src="../../assets/heart.svg" />
   </div>
 </div>
 </template>
