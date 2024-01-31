@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import StepWrapper from "./components/StepWrapper.vue";
-import {useFormStepStore} from "../formStore.ts";
-import RadioInput from "./components/RadioInput.vue";
+import StepWrapper from "../components/StepWrapper.vue";
+import {useFormStepStore} from "../../formStore.ts";
+import RadioInput from "../components/RadioInput.vue";
 
 const store = useFormStepStore()
 const NAME = 'type'
@@ -10,11 +10,16 @@ const NAME = 'type'
 <template>
   <StepWrapper>
     <template #question>
-      Quel type de robot êtes-vous ?
+      Preference
+    </template>
+    <template #description>
+      Choose the preferred <b>body organism type</b> for optimal functionality. Specify the materials, forms, and aesthetic
+      features that align with your preferences. This selection will not only enhance your <b>physical compatibility</b> but
+      also contribute to refining the algorithm's ability to <b>identify suitable matches</b>.
     </template>
     <RadioInput :name="NAME" v-model="store.type" value="human">
       <template #icon>
-        <img src="./components/vue.svg">
+        <img src="./human.png">
       </template>
       <template #description>
         Humanoïde
@@ -22,7 +27,7 @@ const NAME = 'type'
     </RadioInput>
     <RadioInput :name="NAME" v-model="store.type" value="ia">
       <template #icon>
-        <img src="./components/vue.svg">
+        <img src="./robot.png">
       </template>
       <template #description>
         IA
@@ -30,7 +35,7 @@ const NAME = 'type'
     </RadioInput>
     <RadioInput :name="NAME" v-model="store.type" value="cyborg">
       <template #icon>
-        <img src="./components/vue.svg">
+        <img src="./cyborg.png">
       </template>
       <template #description>
         Cyborg
@@ -40,5 +45,7 @@ const NAME = 'type'
 </template>
 
 <style scoped>
-
+img {
+  max-width: 120px;
+}
 </style>
