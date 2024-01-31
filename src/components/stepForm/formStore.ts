@@ -6,6 +6,7 @@ interface FormState {
     port: "rJ45" | "jack" | "usb" | null
     processeur: "eco-logic" | "virtu-sync" | "hyper-thread" | null
     autonomy: number
+    name: string | null
 }
 
 export const useFormStepStore = defineStore('form', {
@@ -14,7 +15,8 @@ export const useFormStepStore = defineStore('form', {
         connexion: null,
         port: null,
         processeur: null,
-        autonomy: 50
+        autonomy: 50,
+        name: null
     }),
     getters: {
         isValid(state) {
