@@ -2,15 +2,28 @@
 import StepWrapper from "../components/StepWrapper.vue";
 import {useFormStepStore} from "../../formStore.ts";
 import RadioInput from "../components/RadioInput.vue";
+import TitleNeon from "../../../base/TitleNeon.vue";
+import {useStore} from "../../../base/styleStore.ts";
 
 const store = useFormStepStore()
+const storeCss = useStore()
 const NAME = 'processeur'
+
+const options = [
+  { value: 'ecologic', label: 'Eco-Logic', icon: 'src/components/stepForm/steps/hardware/ecologic.jpg' },
+  { value: 'virtusync', label: 'VirtuSync PentaCore 360', icon: 'src/components/stepForm/steps/hardware/virtusync.jpg' },
+  { value: 'hyperthread', label: 'HyperThread Titan XJ-3', icon: 'src/components/stepForm/steps/hardware/hyperthread.jpg' }
+];
+
+const updateAnim = (type) => {
+  storeCss.setAnimation(type)
+}
 </script>
 
 <template>
   <StepWrapper>
     <template #question>
-      PORT
+      <TitleNeon text="Hardware" tag="h3" />
     </template>
     <template #description>
       Specify the compatibility requirements for <b>data exchange</b> and <b>connection interfaces</b>. Input your preferences
@@ -19,28 +32,12 @@ const NAME = 'processeur'
       ensures a smooth and effective connection, facilitating <b>optimal data sharing</b> and collaborative functioning within
       the algorithm's framework.
     </template>
-    <RadioInput :name="NAME" v-model="store.processeur" value="eco-logic">
+    <RadioInput v-for="option in options" :key="option.value" :name="NAME" v-model="store.processeur" :value="option.value" @change="updateAnim(option.value)">
       <template #icon>
-        <img src="./ecologic.jpg">
+        <img :src="option.icon">
       </template>
       <template #description>
-        RJ45
-      </template>
-    </RadioInput>
-    <RadioInput :name="NAME" v-model="store.processeur" value="virtu-sync">
-      <template #icon>
-        <img src="./virtusync.jpg">
-      </template>
-      <template #description>
-        VirtuSync PentaCore 360
-      </template>
-    </RadioInput>
-    <RadioInput :name="NAME" v-model="store.processeur" value="hyper-thread">
-      <template #icon>
-        <img src="./hyperthread.jpg">
-      </template>
-      <template #description>
-        HyperThread Titan XJ-3
+        {{ option.label }}
       </template>
     </RadioInput>
   </StepWrapper>

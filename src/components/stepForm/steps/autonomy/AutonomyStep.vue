@@ -2,8 +2,11 @@
 import StepWrapper from "../components/StepWrapper.vue";
 import {useFormStepStore} from "../../formStore.ts";
 import {computed, onMounted, ref} from "vue";
+import {useStore} from "../../../base/styleStore.ts";
+import TitleNeon from "../../../base/TitleNeon.vue";
 
 const store = useFormStepStore()
+const storeCss = useStore()
 const slider = ref<HTMLInputElement | null>(null)
 const fillPercentage = ref(0)
 const sliderProps = {
@@ -14,21 +17,27 @@ const sliderProps = {
 function onInput() {
   if (!slider.value) return;
   fillPercentage.value = (100 * (slider.value.value - slider.value.min)) / (slider.value.max - slider.value.min);
+  updateOpacity(slider.value.value / 100)
 }
 
 const inputStyle = computed(() => {
   return {
     '--range-background': `linear-gradient(90deg, ${sliderProps.fill} ${fillPercentage.value}%, ${sliderProps.background} ${fillPercentage.value +
-    0.1}%)`
+    0.1}%)`,
+    '--range-color' : storeCss.background
   }
 })
+
+const updateOpacity = (value) => {
+  storeCss.setOpacity(value)
+}
 onMounted(onInput)
 </script>
 
 <template>
   <StepWrapper>
     <template #question>
-      AUTONOMY
+      <TitleNeon tag="h3" text="Autonomy" />
     </template>
     <template #description>
       Define your collaborative dynamics by selecting the <b>desired level of autonomy</b> for your partner. Specify autonomy
@@ -75,7 +84,6 @@ $track-radius: 25px !default;
 }
 
 [type='range'] {
-  --range-color: #CC33CA;
   -webkit-appearance: none;
   margin: calc($thumb-height / 2) 0;
   border-radius: 10px;

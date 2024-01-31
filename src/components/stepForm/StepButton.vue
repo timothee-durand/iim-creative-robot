@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {useStore} from "../base/styleStore.ts";
+
 withDefaults(defineProps<{
   disabled?: boolean
   variant?: 'outline' | 'solid'
@@ -6,10 +8,11 @@ withDefaults(defineProps<{
 defineEmits<{
   (e: 'submit'): void
 }>()
+const storeCss = useStore();
 </script>
 
 <template>
-<button type="button" class="step-button" :class="[`step-button--${variant}`]" :disabled="disabled">
+<button type="button" class="step-button" :class="[`step-button--${variant}`]" :style="{'--button-color' : storeCss.background, 'font-size': storeCss.size }" :disabled="disabled">
   <span></span>
   <span></span>
   <span></span>
@@ -19,11 +22,7 @@ defineEmits<{
 </template>
 
 <style scoped lang="scss">
-
-
-
 .step-button {
-  --button-color: #CC33CA;
   --hover-background-color: transparent;
   position: relative;
   display: inline-block;
