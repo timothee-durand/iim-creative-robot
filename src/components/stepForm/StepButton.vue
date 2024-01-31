@@ -30,7 +30,7 @@ defineEmits<{
   padding: 15px 30px;
   color: white;
   overflow: hidden;
-  transition: 0.2s;
+  transition: 0.2s ease-out;
   background: transparent;
   border-radius: 3px;
   cursor: pointer;
@@ -87,30 +87,30 @@ defineEmits<{
     background: var(--hover-background-color);
     border-radius: 3px;
     box-shadow: 0 0 10px var(--button-color), 0 0 40px var(--button-color), 0 0 80px var(--button-color);
-    transition-delay: 600ms;
+    transition-delay: 300ms;
 
     span {
       &:nth-child(1) {
         left: 100%;
-        transition: 600ms;
+        transition: 200ms;
       }
 
       &:nth-child(3) {
         right: 100%;
-        transition: 800ms;
-        transition-delay: 250ms;
+        transition: 250ms;
+        transition-delay: 200ms;
       }
 
       &:nth-child(2) {
         top: 100%;
-        transition: 800ms;
+        transition: 250ms;
         transition-delay: 100ms;
       }
 
       &:nth-child(4) {
         bottom: 100%;
-        transition: 800ms;
-        transition-delay: 450ms;
+        transition: 250ms;
+        transition-delay: 150ms;
       }
     }
   }
