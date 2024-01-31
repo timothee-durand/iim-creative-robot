@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StepForm from "./components/stepForm/StepForm.vue";
+import Header from "./components/header/Header.vue";
 import {useFormStepStore} from "./components/stepForm/formStore.ts";
 import {useStore} from "./components/base/styleStore.ts";
 
@@ -11,7 +12,8 @@ function onSubmit() {
 </script>
 
 <template>
-  <StepForm :style="{'font-size': storeCss.size, opacity: storeCss.opacity}" @submit="onSubmit"/>
+  <Header />
+  <StepForm  @submit="onSubmit"/>
 </template>
 
 <style scoped>
