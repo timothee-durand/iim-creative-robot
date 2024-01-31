@@ -2,33 +2,37 @@
 import StepWrapper from "../components/StepWrapper.vue";
 import {useFormStepStore} from "../../formStore.ts";
 import {computed, onMounted, ref} from "vue";
+import {useStore} from "../../../base/styleStore.ts";
+import TitleNeon from "../../../base/TitleNeon.vue";
 
 const store = useFormStepStore()
+const storeCss = useStore()
 const slider = ref<HTMLInputElement | null>(null)
 const fillPercentage = ref(0)
-const sliderProps = {
-  fill: "var(--range-color)",
-  background: "transparent",
-};
 
 function onInput() {
   if (!slider.value) return;
   fillPercentage.value = (100 * (slider.value.value - slider.value.min)) / (slider.value.max - slider.value.min);
+  updateOpacity(slider.value.value / 100)
 }
 
 const inputStyle = computed(() => {
   return {
-    '--range-background': `linear-gradient(90deg, ${sliderProps.fill} ${fillPercentage.value}%, ${sliderProps.background} ${fillPercentage.value +
-    0.1}%)`
+    '--fill-percentage': `${fillPercentage.value}%`,
+    '--range-color' : storeCss.background
   }
 })
+
+const updateOpacity = (value) => {
+  storeCss.setOpacity(value)
+}
 onMounted(onInput)
 </script>
 
 <template>
   <StepWrapper>
     <template #question>
-      AUTONOMY
+      <TitleNeon tag="h3" text="Autonomy" />
     </template>
     <template #description>
       Define your collaborative dynamics by selecting the <b>desired level of autonomy</b> for your partner. Specify autonomy
@@ -75,13 +79,12 @@ $track-radius: 25px !default;
 }
 
 [type='range'] {
-  --range-color: #CC33CA;
   -webkit-appearance: none;
   margin: calc($thumb-height / 2) 0;
   border-radius: 10px;
   width: $track-width;
   color: transparent;
-  background: var(--range-background);
+  background: linear-gradient(90deg, color-mix(in srgb, $color-primary, transparent min(70%, calc(100% - var(--fill-percentage)))) var(--fill-percentage), transparent calc(var(--fill-percentage) + 0.1%));
   box-shadow: 0 0 10px $color-primary, 0 0 40px $color-primary;
   margin: 20px auto 0 auto;
 
@@ -103,6 +106,7 @@ $track-radius: 25px !default;
 
   &::-webkit-slider-runnable-track {
     @include track;
+
   }
 
   &::-webkit-slider-thumb {
@@ -110,12 +114,14 @@ $track-radius: 25px !default;
     -webkit-appearance: none;
     margin-top: -15px;
     box-shadow: 0 0 10px $color-primary, 0 0 40px $color-primary;
+
   }
 
   &::-moz-range-track {
     @include track;
     border: $track-border-width solid $track-border-color;
     border-radius: $track-radius;
+
   }
 
   &::-moz-range-thumb {

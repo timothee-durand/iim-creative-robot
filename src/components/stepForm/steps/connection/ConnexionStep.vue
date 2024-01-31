@@ -2,57 +2,69 @@
 import StepWrapper from "../components/StepWrapper.vue";
 import {useFormStepStore} from "../../formStore.ts";
 import RadioInput from "../components/RadioInput.vue";
+import TitleNeon from "../../../base/TitleNeon.vue";
+import {useStore} from "../../../base/styleStore.ts";
 
 const store = useFormStepStore()
+const storeCss = useStore();
 const NAME = 'connexion'
+
+const options = [
+  {
+    value: 'wifi',
+    label: 'Wifi',
+    icon: 'src/components/stepForm/steps/connection/wifi.svg',
+    subText: 'For a stable long-term connection'
+  },
+  {
+    value: 'bluetooth',
+    label: 'Bluetooth',
+    icon: 'src/components/stepForm/steps/connection/bluetooth.svg',
+    subText: 'For an unsecure short-term connection'
+  },
+  {
+    value: 'wired',
+    label: 'Wired',
+    icon: 'src/components/stepForm/steps/connection/cable.svg',
+    subText: 'Watch out for the virus'
+  }
+];
+
+const updateColor = (type) => {
+  storeCss.setBackground(type);
+};
 </script>
 
 <template>
   <StepWrapper>
     <template #question>
-      CONNECTION
+      <TitleNeon tag="h3" text="Connexion"/>
     </template>
     <template #description>
-      Choose the preferred <b>body organism</b> type for optimal functionality. Specify the materials, forms, and aesthetic
+      Choose the preferred <b>body organism</b> type for optimal functionality. Specify the materials, forms, and
+      aesthetic
       features that align with your preferences. This selection will not only enhance your physical compatibility but
       also contribute to refining the algorithm's ability to identify suitable matches.
     </template>
-    <RadioInput :name="NAME" v-model="store.connexion" value="wifi">
+    <RadioInput v-for="option in options" :key="option.value" :name="NAME" v-model="store.connexion" @change="updateColor(option.value)"
+                :value="option.value">
       <template #icon>
-        <img src="./wifi.svg">
+        <img :src="option.icon">
       </template>
       <template #description>
-        Wifi<br/>
-        For a stable
-        long-term connection
+        {{ option.label }}
+        <br>
+        <span class="subText">{{ option.subText }}</span>
       </template>
     </RadioInput>
-    <RadioInput :name="NAME" v-model="store.connexion" value="bluetooth">
-      <template #icon>
-        <img src="./bluetooth.svg">
-      </template>
-      <template #description>
-        Bluetooth<br/>
-        For an unsecure
-        short-term connection
-      </template>
-    </RadioInput>
-    <RadioInput :name="NAME" v-model="store.connexion" value="wired">
-      <template #icon>
-        <img src="./cable.svg">
-      </template>
-      <template #description>
-        Wired<br/>
-        Watch out for
-        the virus
-      </template>
-    </RadioInput>
-
   </StepWrapper>
 </template>
 
 <style scoped>
 img {
   max-width: 60px;
+}
+.subText {
+  font-size: 0.9rem;
 }
 </style>
