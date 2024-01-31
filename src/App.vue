@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StepForm from "./components/stepForm/StepForm.vue";
+import Header from "./components/header/Header.vue";
 import {useFormStepStore} from "./components/stepForm/formStore.ts";
 
 const store = useFormStepStore()
@@ -9,6 +10,7 @@ function onSubmit() {
 </script>
 
 <template>
+  <Header />
   <StepForm  @submit="onSubmit"/>
 </template>
 
