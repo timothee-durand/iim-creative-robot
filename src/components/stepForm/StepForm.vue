@@ -4,7 +4,6 @@ import {formSteps} from "./formSteps.ts";
 import {useFormStepStore} from "./formStore.ts";
 import StepButton from "./StepButton.vue";
 import {useStore} from "../base/styleStore.ts";
-import TitleNeon from "../base/TitleNeon.vue";
 
 const currentStepIndex = ref<number>(0);
 const mode = ref<"next" | "previous">("next");
@@ -96,26 +95,7 @@ watch(storeCss, () => {
   }
 })
 
-const anim = () => {
-  const heart = document.getElementById('like');
-  const container = document.getElementById('heart-container');
-  const text = document.getElementById('match-text');
-  heart.classList.add('grow');
-  setTimeout(() => {
-    text.classList.add('anim');
-    setTimeout(() => {
-      startAnimation();
-      setTimeout(() => {
-        container.classList.add('fadeDiv');
-        setTimeout(() => {
-          heart.classList.remove('grow');
-          text.classList.remove('anim');
-          container.classList.remove('fadeDiv');
-        }, 5000)
-      }, 1000)
-    }, 2000)
-  }, 2000)
-}
+
 </script>
 
 <template>
@@ -130,7 +110,6 @@ const anim = () => {
       <StepButton type="button" @click="goToNextStep" v-if="hasNextStep" variant="solid">Next</StepButton>
       <StepButton type="button" @click="$emit('submit')" v-else :disabled="!store.isValid" variant="solid">Submit
       </StepButton>
-      <StepButton type="button" @click="anim" variant="solid">Submit</StepButton>
     </div>
     <div class="svg-container">
       <svg v-for="index in imageCount" class="heart" :key="index" viewBox="0 0 70 64" fill="none"
@@ -139,14 +118,6 @@ const anim = () => {
               d="M35 11.7807C28.8021 4.55802 18.4452 2.32589 10.6796 8.93972C2.9139 15.5536 1.82059 26.6115 7.91902 34.4338C12.9895 40.9372 28.3343 54.6541 33.3636 59.0937C33.926 59.5904 34.2075 59.8387 34.5357 59.9362C34.8219 60.0213 35.1354 60.0213 35.422 59.9362C35.7502 59.8387 36.0313 59.5904 36.5941 59.0937C41.6234 54.6541 56.968 40.9372 62.0386 34.4338C68.137 26.6115 67.177 15.484 59.2779 8.93972C51.3787 2.39546 41.198 4.55802 35 11.7807Z"
               :stroke="storeCss.background" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-    </div>
-    <div id="heart-container">
-      <svg id="like" width="70" height="64" viewBox="0 0 70 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd"
-              d="M35 11.7807C28.8021 4.55802 18.4452 2.32589 10.6796 8.93972C2.9139 15.5536 1.82059 26.6115 7.91902 34.4338C12.9895 40.9372 28.3343 54.6541 33.3636 59.0937C33.926 59.5904 34.2075 59.8387 34.5357 59.9362C34.8219 60.0213 35.1354 60.0213 35.422 59.9362C35.7502 59.8387 36.0313 59.5904 36.5941 59.0937C41.6234 54.6541 56.968 40.9372 62.0386 34.4338C68.137 26.6115 67.177 15.484 59.2779 8.93972C51.3787 2.39546 41.198 4.55802 35 11.7807Z"
-              :stroke="storeCss.background" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <TitleNeon text="It's a match" tag="h2" id="match-text"/>
     </div>
   </div>
 </template>
@@ -237,65 +208,6 @@ const anim = () => {
     visibility: hidden;
   }
 }
-// Animation coeur
-@keyframes growHeart {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(20);
-    opacity: 1;
-  }
-}
-@keyframes fadeInText {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes fadeAnim {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-.fadeDiv {
-  animation: fadeAnim 0.5s ease forwards;
-}
-#match-text {
-  position: fixed;
-  width: 100%;
-  top: 50%;
-  left: 75%;
-  opacity: 0;
-  font-size: 3rem;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 100;
-  &.anim {
-    animation: fadeInText 1s ease forwards;
-  }
-}
-#heart-container {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 50%;
-  left: 45%;
-  pointer-events: none;
-}
-#like {
-  z-index: 100;
-  opacity: 0;
-  transform-origin: center;
-}
-#like.grow {
-  animation: growHeart 2s ease forwards;
-}
+
 
 </style>
