@@ -50,7 +50,7 @@ input {
 }
 .robot {
   position: absolute;
-  top: -25px;
+  top: 0;
   right: 0;
   width: calc(100% - $inputWidth);
   overflow: hidden;
