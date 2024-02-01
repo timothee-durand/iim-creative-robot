@@ -9,16 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/gsap": "^3.0.0",
+    "@vueuse/core": "^10.7.2",
+    "gsap": "^3.12.5",
+    "pinia": "^2.1.7",
     "swing": "^3.1.4",
     "vue": "^3.3.11",
     "vue3-swipe-actions": "^0.0.1",
-    "vue3-touch-events": "^4.1.8",
-    "@vueuse/core": "^10.7.2",
-    "pinia": "^2.1.7",
-    "@types/gsap": "^3.0.0",
-    "gsap": "^3.12.5"
+    "vue3-touch-events": "^4.1.8"
   },
   "devDependencies": {
+    "@types/node": "^20.11.15",
     "@vitejs/plugin-vue": "^4.5.2",
     "sass": "^1.70.0",
     "typescript": "^5.2.2",
