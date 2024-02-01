@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import {useStore} from "../../components/base/styleStore.ts";
+import {ref} from "vue";
 
 const store = useStore();
+const isBlinking = ref(false);
 </script>
 
 <template>

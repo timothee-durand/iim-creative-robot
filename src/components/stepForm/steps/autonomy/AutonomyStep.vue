@@ -7,13 +7,11 @@ import TitleNeon from "../../../base/TitleNeon.vue";
 
 const store = useFormStepStore()
 const storeCss = useStore()
-const slider = ref<HTMLInputElement | null>(null)
 const fillPercentage = ref(0)
 
 function onInput() {
-  if (!slider.value) return;
-  fillPercentage.value = (100 * (slider.value.value - slider.value.min)) / (slider.value.max - slider.value.min);
-  updateOpacity(slider.value.value / 100)
+  fillPercentage.value = store.autonomy
+  updateOpacity(store.autonomy / 100)
 }
 
 const inputStyle = computed(() => {
@@ -23,7 +21,7 @@ const inputStyle = computed(() => {
   }
 })
 
-const updateOpacity = (value) => {
+const updateOpacity = (value: number) => {
   storeCss.setOpacity(value)
 }
 onMounted(onInput)
@@ -41,7 +39,7 @@ onMounted(onInput)
       algorithm's parameters. Tailoring this setting guarantees a <b>synchronized and effective</b> collaboration tailored to
       your unique requirements.
     </template>
-    <input @input="onInput" :style="inputStyle" ref="slider" type="range" min="0" max="100"
+    <input @input="onInput" :style="inputStyle" type="range" min="0" max="100"
            v-model.number="store.autonomy">
   </StepWrapper>
 </template>

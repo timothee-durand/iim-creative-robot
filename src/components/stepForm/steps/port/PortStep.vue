@@ -15,7 +15,7 @@ const options = [
   { value: 'usb', label: 'USB', icon: 'src/components/stepForm/steps/port/usb.svg' }
 ];
 
-const updatePort = (port) => {
+const updatePort = (port : string) => {
   storeCss.setSize(port)
 }
 </script>
