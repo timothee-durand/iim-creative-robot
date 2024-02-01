@@ -1,6 +1,6 @@
 
 <script lang="ts">
-import Flux from './Flux.vue';
+import Flux from './flux.vue';
 
 export default {
     
@@ -13,10 +13,10 @@ export default {
         isAnimating: false,
         currentCardIndex: 0,
         cards: [
-            { title: 'IDTA-734965', description: 'Description 1', imageSrc: 'imgCard1.png', showDetails: false, showImage: true, type: 'Robotic', processor: 'EcoLogic Processor Z3',connection:'Wi-Fi', connectionSrc: 'wifi.svg', port : 'USB', energyAutonomy: '48h'},
-            { title: 'RXTA-827391', description: 'Description 2', imageSrc: 'face2.png', showDetails: false, showImage: true, type: 'Cyborg', processor: 'HyperThread Titan XJ-3', connection:'Wi-Fi',connectionSrc: 'bluetooth.svg', port : 'JACK', energyAutonomy: '12h' },
-            { title: 'JNDA-502748', description: 'Description 3', imageSrc: 'face3.jpeg', showDetails: false, showImage: true, type: 'AI', processor: 'VirtuSync PentaCore 360 ',connection:'Wi-Fi' ,connectionSrc: 'wired.svg', port : 'RJ45', energyAutonomy: '24h'},
-            { title: 'QLZA-416830', description: 'Description 4', imageSrc: 'face4.jpg', showDetails: false, showImage: true, type: 'Cyborg', processor: 'EcoLogic Processor Z3',connection:'Wi-Fi' ,connectionSrc: 'bluetooth.svg', port : 'RJ45', energyAutonomy: '8h'},
+            { title: 'IDTA-734965', description: 'Description 1', imageSrc: 'imgCard1.png', showDetails: false, showImage: true, type: 'Robotic', processor: 'EcoLogic Processor Z3',connection:'Wi-Fi', connectionSrc: 'wifi.svg', port : 'USB', energyAutonomy: '48h', isShrinking: false, isExpanding: false},
+            { title: 'RXTA-827391', description: 'Description 2', imageSrc: 'face2.png', showDetails: false, showImage: true, type: 'Cyborg', processor: 'HyperThread Titan XJ-3', connection:'Wi-Fi',connectionSrc: 'bluetooth.svg', port : 'JACK', energyAutonomy: '12h', isShrinking: false, isExpanding: false},
+            { title: 'JNDA-502748', description: 'Description 3', imageSrc: 'face6.avif', showDetails: false, showImage: true, type: 'AI', processor: 'VirtuSync PentaCore 360 ',connection:'Wi-Fi' ,connectionSrc: 'wired.svg', port : 'RJ45', energyAutonomy: '24h', isShrinking: false, isExpanding: false},
+            { title: 'QLZA-416830', description: 'Description 4', imageSrc: 'face4.jpg', showDetails: false, showImage: true, type: 'Cyborg', processor: 'EcoLogic Processor Z3',connection:'Wi-Fi' ,connectionSrc: 'bluetooth.svg', port : 'RJ45', energyAutonomy: '8h', isShrinking: false, isExpanding: false},
 
         ],
         };
@@ -25,21 +25,32 @@ export default {
     methods: {
         swipeLeftHandler() {
             if (this.currentCardIndex < this.cards.length - 1) {
-                const currentCardSelector = `.card:nth-child(${this.currentCardIndex + 1})`;
-                const nextCardSelector = `.card:nth-child(${this.currentCardIndex + 2})`;
-                const currentCard = this.$el.querySelector(currentCardSelector) as HTMLElement;
-                const nextCard = this.$el.querySelector(nextCardSelector) as HTMLElement;
-                console.log(nextCard)
-                currentCard.classList.add('shrink-to-line');
+                // Start animation for the current card
+                this.cards[this.currentCardIndex].isShrinking = true;
+
+                // Set isAnimating to true after the duration of the forward animation
                 setTimeout(() => {
-                    currentCard.classList.remove('shrink-to-line');
-                    nextCard.classList.add('line-to-shrink');
-                    this.currentCardIndex++;
-                }, 4000); // timeout should match transition duration
-                this.isAnimating = true;
+                    this.isAnimating = true;
+                }, 500); // Duration of the forward animation
                 setTimeout(() => {
                     this.isAnimating = false;
-                }, 4000);
+                }, 2000); // Duration of the forward animation
+
+                setTimeout(() => {
+                    // End animation for the current card and increment index
+                    this.cards[this.currentCardIndex].isShrinking = false;
+                    this.currentCardIndex++;
+
+                    // Start reverse animation for the next card
+                    if (this.currentCardIndex < this.cards.length) {
+                        this.cards[this.currentCardIndex].isExpanding = true;
+                        
+                        setTimeout(() => {
+                            // End reverse animation for the next card
+                            this.cards[this.currentCardIndex].isExpanding = false;
+                        }, 1000); // Duration of the reverse animation
+                    }
+                }, 2000); // Duration of the forward animation
             }
         },
         swipeRightHandler() {
@@ -66,7 +77,7 @@ export default {
     <div>
         <Flux :animatePath="isAnimating"/>
         <div v-touch:swipe.left="swipeLeftHandler" v-touch:swipe.right="swipeRightHandler" v-touch:tap="tapHandler" class="card-container">
-            <div v-for="(card, index) in cards" :key="index" :ref="`card-${index}`" class="card" v-show="index === currentCardIndex">
+            <div v-for="(card, index) in cards" :key="index" class="card" :class="{ 'shrink-to-line': card.isShrinking, 'line-to-shrink': card.isExpanding }" v-show="index === currentCardIndex">
             <div class="card-content">
                 <img :src="card.imageSrc" alt="Card Image" />
                 <div class="card-text">
@@ -239,12 +250,12 @@ export default {
     }
     @keyframes shrinktoline {
     0% {
-        transform: scaleY(0); /* Move the line to the top */
+        transform: scaleY(0) scaleX(0.5);
         opacity: 0;
     }
     50% {
-        transform: scaleY(0.10); /* Shrink height to almost a line */
-        opacity: 0.5;
+        transform: scaleX(0.5); /* Shrink height to almost a line */
+        opacity: 1;
     }
     100% {
         
@@ -254,10 +265,10 @@ export default {
     }
 
     .shrink-to-line {
-    animation: shrinkToLineAndMoveUp 1s forwards;
+    animation: shrinkToLineAndMoveUp 0.5s forwards;
     }
     .line-to-shrink {
-    animation: shrinktoline 1s forwards;
+    animation: shrinktoline 0.5s forwards;
     }
     
 
