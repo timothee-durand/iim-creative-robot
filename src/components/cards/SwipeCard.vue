@@ -36,7 +36,7 @@ export default {
           energyAutonomy: '48h',
           isShrinking: false,
           isExpanding: false,
-          top: "0px",
+          top: "52px",
         },
         {
           title: 'RXTA-827391',
@@ -52,7 +52,7 @@ export default {
           energyAutonomy: '12h',
           isShrinking: false,
           isExpanding: false,
-          top: '-2Opx',
+          top: '45px',
         },
         {
           title: 'JNDA-502748',
@@ -68,7 +68,7 @@ export default {
           energyAutonomy: '24h',
           isShrinking: false,
           isExpanding: false,
-          top: "-10px",
+          top: "47px",
         },
         {
           title: 'QLZA-416830',
@@ -84,7 +84,7 @@ export default {
           energyAutonomy: '8h',
           isShrinking: false,
           isExpanding: false,
-          top: "0px",
+          top: "52px",
         },
       ],
     };
@@ -233,7 +233,7 @@ export default {
             <div class="flex">
               <div class="flex-text">
                 <h3>{{ card.title }}</h3>
-                <img :src="card.connectionSrc" alt="" class="svgConn" :style="{'margin-top': card.top}">
+                <img :src="card.connectionSrc" alt="" class="svgConn" :style="{'top': card.top}">
               </div>
               <img src="/leftAcces2.svg" alt="" class="svgRight">
             </div>
@@ -368,7 +368,6 @@ export default {
   position: absolute;
   width: 38px !important;
   right: -101px;
-  top: 52px;
 }
 
 .dashed-line {
