@@ -25,6 +25,10 @@ export default {
 .animated-path {
   animation: path 0.5s ease-out infinite ;
 }
+svg{
+    display: block;
+    margin: auto;
+}
 #anim {
   stroke-dasharray: 160px;
   stroke-linecap: round;

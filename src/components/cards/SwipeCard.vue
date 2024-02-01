@@ -8,6 +8,12 @@ export default {
         Flux
     },
 
+    computed: {
+    isThirdCard() {
+        return this.currentCardIndex === 2; // Index 2 corresponds to the 3rd card
+        }
+    },
+
     data() {
         return {
         isAnimating: false,
@@ -96,7 +102,7 @@ export default {
     <div>
         <Flux :animatePath="isAnimating"/>
         <div v-touch:swipe.left="swipeLeftHandler" v-touch:swipe.right="swipeRightHandler" v-touch:tap="tapHandler" class="card-container">
-            <div v-for="(card, index) in cards" :key="index" class="card" :class="{ 'shrink-to-line': card.isShrinking, 'line-to-shrink': card.isExpanding }" v-show="index === currentCardIndex">
+            <div v-for="(card, index) in cards" :key="index" class="card" :class="{ 'shrink-to-line': card.isShrinking, 'line-to-shrink': card.isExpanding, 'special-animation': index === 2 }" v-show="index === currentCardIndex">
             <div class="card-content">
                 <img :src="card.imageSrc" alt="Card Image" />
                 <div class="card-text">
@@ -128,6 +134,7 @@ export default {
                         <!-- Add more details here as needed -->
                     </div>
                 </div>
+                <div v-if="index === 2" class="heart"></div>
             </div>
         </div>
         </div>
@@ -231,7 +238,7 @@ export default {
     .svgConn{
         position: absolute;
         width: 38px !important;
-        right: -131px;
+        right: -101px;
         top: 52px;
     }
 
@@ -289,8 +296,5 @@ export default {
     .line-to-shrink {
     animation: shrinktoline 0.5s forwards;
     }
-    
-
-    
 
 </style>

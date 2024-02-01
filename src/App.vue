@@ -16,7 +16,9 @@ function onSubmit() {
     <Header />
     <HeroHeader />
     <StepForm  @submit="onSubmit"/>
-    <SwipeCard/>
+    <div>
+      <SwipeCard/>
+    </div>
   </div>
   
 </template>
