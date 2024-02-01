@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {useStore} from "../base/styleStore.ts";
+import {ref, watch} from "vue";
 
 withDefaults(defineProps<{
   disabled?: boolean
@@ -9,10 +10,25 @@ defineEmits<{
   (e: 'submit'): void
 }>()
 const storeCss = useStore();
+const animationLevel = ref<'bad' | 'middle' | 'good'>('good')
+
+watch(storeCss, () => {
+  switch (storeCss.animation) {
+    case 'hyperthread':
+      animationLevel.value = 'good'
+      break
+    case 'virtusync':
+      animationLevel.value = 'middle'
+      break
+    case 'ecologic':
+      animationLevel.value = 'bad'
+      break
+  }
+}, {immediate: true})
 </script>
 
 <template>
-<button type="button" class="step-button" :class="[`step-button--${variant}`]" :style="{'--button-color' : storeCss.background, 'font-size': storeCss.size }" :disabled="disabled">
+<button type="button" class="step-button" :class="[`step-button--${variant}`, `step-button--${animationLevel}`]" :style="{'--button-color' : storeCss.background, 'font-size': storeCss.size }" :disabled="disabled">
   <span></span>
   <span></span>
   <span></span>
@@ -113,6 +129,73 @@ const storeCss = useStore();
       }
     }
   }
+
+  &--bad {
+    transition-delay: 2000ms !important;
+    transition-duration: 600ms;
+    &:hover:not(:disabled) {
+
+      span {
+        &:nth-child(1) {
+          left: 100%;
+          transition: 5000ms;
+        }
+
+        &:nth-child(3) {
+          right: 100%;
+          transition: 4000ms;
+          transition-delay: 2000ms;
+        }
+
+        &:nth-child(2) {
+          top: 100%;
+          transition: 4000ms;
+          transition-delay: 1000ms;
+        }
+
+        &:nth-child(4) {
+          bottom: 100%;
+          transition: 4000ms;
+          transition-delay: 1500ms;
+        }
+      }
+    }
+
+
+  }
+
+  &--middle {
+    transition-delay: 1000ms !important;
+    transition-duration: 1000ms;
+    &:hover:not(:disabled) {
+
+      span {
+        &:nth-child(1) {
+          left: 100%;
+          transition: 2000ms;
+        }
+
+        &:nth-child(3) {
+          right: 100%;
+          transition: 1000ms;
+          transition-delay: 200ms;
+        }
+
+        &:nth-child(2) {
+          top: 100%;
+          transition: 1000ms;
+          transition-delay: 100ms;
+        }
+
+        &:nth-child(4) {
+          bottom: 100%;
+          transition: 1000ms;
+          transition-delay: 150ms;
+        }
+      }
+    }
+  }
+
 
 
 }

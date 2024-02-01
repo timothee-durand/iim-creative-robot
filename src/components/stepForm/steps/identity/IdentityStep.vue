@@ -3,11 +3,19 @@ import StepWrapper from "../components/StepWrapper.vue";
 import {useFormStepStore} from "../../formStore.ts";
 import Robot from "./robot.vue";
 import TitleNeon from "../../../base/TitleNeon.vue";
+import {computed} from "vue";
+import {useStore} from "../../../base/styleStore.ts";
 const store = useFormStepStore()
+const cssStore = useStore()
+const styles = computed(() => ({
+    '--input-color': cssStore.background,
+  })
+
+)
 </script>
 
 <template>
-<StepWrapper class="identity">
+<StepWrapper class="identity" :style="styles">
   <template #question>
     <TitleNeon tag="h3" text="Identity" />
   </template>
@@ -25,7 +33,6 @@ const store = useFormStepStore()
 @import "../vars";
 $inputWidth: 390px;
 input {
-  --input-color: #CC33CA;
   appearance: none;
   border: var(--input-color) 2px solid;
   background: transparent;

@@ -1,14 +1,16 @@
 <script setup lang="ts">
+import {useStore} from "../../../base/styleStore.ts";
 
+const storeCss = useStore()
 </script>
 
 <template>
   <div class="wrapper">
-    <div class="step">
-      <div class="step__question">
+    <div class="step" :style="{'font-size' : storeCss.size}">
+      <div class="step__question" :style="{'opacity' : storeCss.opacity}">
         <slot name="question"/>
       </div>
-      <div class="step__description">
+      <div class="step__description" :style="{'opacity' : storeCss.opacity}">
         <slot name="description"/>
       </div>
       <div class="step__input">
