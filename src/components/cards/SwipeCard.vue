@@ -207,12 +207,11 @@ export default {
     },
   }
 };
-
-
 </script>
 
 <template>
   <div class="card-container-all">
+    <TitleNeon tag="h2" text="Match" class="title" />
     <div class="svg-container">
       <svg v-for="index in imageCount" class="heart" :key="index" viewBox="0 0 70 64" fill="none"
            xmlns="http://www.w3.org/2000/svg">
@@ -272,6 +271,13 @@ export default {
 </template>
 
 <style scoped>
+.title{
+  position: absolute;
+  left: 80px;
+  top: 20px;
+  z-index: 2 !important;
+}
+
 .card-container {
   width: 360px;
   margin: -255px auto 0;
@@ -438,6 +444,7 @@ export default {
   .heart {
     visibility: hidden;
     top: -25%;
+    z-index: 100;
     position: absolute;
   }
 }
