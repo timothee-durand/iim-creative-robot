@@ -4,16 +4,11 @@ import TitleNeon from "../base/TitleNeon.vue";
 import {useStore} from "../base/styleStore";
 
 export default {
-
   components: {
     TitleNeon,
     Flux
   },
-
   computed: {
-    isThirdCard() {
-      return this.currentCardIndex === 2; // Index 2 corresponds to the 3rd card
-    },
     // Fonction pour démarrer l'animation
     imageCount() {
       if (this.storeCss.animation === 'hyperthread') return 40
@@ -21,7 +16,6 @@ export default {
       return 20
     }
   },
-
   data() {
     return {
       isAnimating: false,
@@ -41,7 +35,8 @@ export default {
           port: 'USB',
           energyAutonomy: '48h',
           isShrinking: false,
-          isExpanding: false
+          isExpanding: false,
+          top: "0px",
         },
         {
           title: 'RXTA-827391',
@@ -51,12 +46,13 @@ export default {
           showImage: true,
           type: 'Cyborg',
           processor: 'HyperThread Titan XJ-3',
-          connection: 'Wi-Fi',
+          connection: 'Bluetooth',
           connectionSrc: 'bluetooth.svg',
           port: 'JACK',
           energyAutonomy: '12h',
           isShrinking: false,
-          isExpanding: false
+          isExpanding: false,
+          top: '-2Opx',
         },
         {
           title: 'JNDA-502748',
@@ -66,12 +62,13 @@ export default {
           showImage: true,
           type: 'AI',
           processor: 'VirtuSync PentaCore 360 ',
-          connection: 'Wi-Fi',
+          connection: 'Wired',
           connectionSrc: 'wired.svg',
           port: 'RJ45',
           energyAutonomy: '24h',
           isShrinking: false,
-          isExpanding: false
+          isExpanding: false,
+          top: "-10px",
         },
         {
           title: 'QLZA-416830',
@@ -82,13 +79,13 @@ export default {
           type: 'Cyborg',
           processor: 'EcoLogic Processor Z3',
           connection: 'Wi-Fi',
-          connectionSrc: 'bluetooth.svg',
+          connectionSrc: 'wifi.svg',
           port: 'RJ45',
           energyAutonomy: '8h',
           isShrinking: false,
-          isExpanding: false
+          isExpanding: false,
+          top: "0px",
         },
-
       ],
     };
   },
@@ -236,47 +233,42 @@ export default {
             <div class="flex">
               <div class="flex-text">
                 <h3>{{ card.title }}</h3>
-
-                <img :src="card.connectionSrc" alt="" class="svgConn">
+                <img :src="card.connectionSrc" alt="" class="svgConn" :style="{'margin-top': card.top}">
               </div>
               <img src="/leftAcces2.svg" alt="" class="svgRight">
             </div>
             <div v-if="card.showDetails">
               <div class="detail-item">
-                                <span class="detail">
-                                    Connection: {{ card.connection }}
-                                </span>
+                <span class="detail">
+                    Connection: {{ card.connection }}
+                </span>
               </div>
               <div class="detail-item">
-                                <span class="detail">
-                                    <p>CPU: {{ card.processor }}</p>
-                                </span>
+                <span class="detail">
+                    <p>CPU: {{ card.processor }}</p>
+                </span>
               </div>
               <div class="detail-item">
-                                <span class="detail">
-                                    <p>Port: {{ card.port }}</p>
-                                </span>
+                <span class="detail">
+                    <p>Port: {{ card.port }}</p>
+                </span>
               </div>
               <p>Energy Autonomy: {{ card.energyAutonomy }}</p>
-              <!-- Add more details here as needed -->
             </div>
           </div>
           <div v-if="index === 2" class="heart"></div>
         </div>
       </div>
     </div>
-
     <div id="heart-container">
       <svg id="like" width="70" height="64" viewBox="0 0 70 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd"
               d="M35 11.7807C28.8021 4.55802 18.4452 2.32589 10.6796 8.93972C2.9139 15.5536 1.82059 26.6115 7.91902 34.4338C12.9895 40.9372 28.3343 54.6541 33.3636 59.0937C33.926 59.5904 34.2075 59.8387 34.5357 59.9362C34.8219 60.0213 35.1354 60.0213 35.422 59.9362C35.7502 59.8387 36.0313 59.5904 36.5941 59.0937C41.6234 54.6541 56.968 40.9372 62.0386 34.4338C68.137 26.6115 67.177 15.484 59.2779 8.93972C51.3787 2.39546 41.198 4.55802 35 11.7807Z"
               :stroke="storeCss.background" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <TitleNeon tag="h2" text="It's a match" id="match-text" />
+      <TitleNeon tag="h2" text="It's a match" id="match-text"/>
     </div>
   </div>
-
-
 </template>
 
 <style scoped>
@@ -294,9 +286,7 @@ export default {
   user-select: none;
   background: url('border.svg') no-repeat center center; /* Path to your SVG */
   background-size: 100% 100%; /* Make the SVG fit the container */
-
 }
-
 
 .detail-item {
   position: relative;
