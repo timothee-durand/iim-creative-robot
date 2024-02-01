@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import SwipeCard from './components/cards/SwipeCard.vue';
+import StepForm from "./components/stepForm/StepForm.vue";
+import Header from "./components/header/Header.vue";
+import {useFormStepStore} from "./components/stepForm/formStore.ts";
+import {useStore} from "./components/base/styleStore.ts";
+const store = useFormStepStore()
+const storeCss = useStore()
+function onSubmit() {
+  console.log('submit', store.$state)
+}
 </script>
 
 <template>
   <div>
-    <SwipeCard/>
+    <Header />
+    <StepForm  @submit="onSubmit"/>
+    <div>
+      <SwipeCard/>
+    </div>
   </div>
 </template>
 
@@ -24,4 +37,6 @@ html{
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
+
+
 </style>
