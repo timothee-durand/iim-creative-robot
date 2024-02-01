@@ -57,7 +57,7 @@ watch(storeCss, () => {
         neonEffect()
       break
   }
-})
+}, {immediate: true})
 
 defineEmits<{
   (e: 'update:modelValue', value: string): void
