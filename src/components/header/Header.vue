@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {useStore} from "../../components/base/styleStore.ts";
+import Heart from "./Heart.vue";
 
 const store = useStore();
 </script>
@@ -14,7 +15,7 @@ const store = useStore();
         </div>
         <div class="header__icon">
             <div class="header__icon-semi-circle">
-                <img class="heart" src="../../assets/heart.svg">
+                <Heart />
             </div>
         </div>
     </div>
