@@ -47,7 +47,7 @@ const imageCount = computed(() => {
 
 
 function startAnimation() {
-  const images = document.querySelectorAll('.step-form .svg-container .heart');
+  const images = Array.from(document.querySelectorAll('.step-form .svg-container .heart')) as HTMLElement[];
   images.forEach((image) => {
     const delay = Math.random() * 1500;
     const size = ref(Math.random() * 100 + 50)
