@@ -79,7 +79,6 @@ defineEmits<{
   (event: "submit"): void
 }>()
 
-const storeCss = useStore()
 const animationLevel = ref<'bad' | 'middle' | 'good'>('good')
 
 watch(storeCss, () => {
