@@ -3,7 +3,7 @@ import SwipeCard from './components/cards/SwipeCard.vue';
 import StepForm from "./components/stepForm/StepForm.vue";
 import Header from "./components/header/Header.vue";
 import HeroHeader from "./components/heroHeader/heroHeader.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useIntersectionObserver} from "@vueuse/core";
 
 const hasSubmitted = ref(false)
@@ -14,6 +14,11 @@ function onSubmit() {
 
 const target = ref(null)
 const targetIsVisible = ref(false)
+
+
+onMounted(() => {
+  document.body.scrollIntoView({behavior: 'smooth', block: 'start'})
+})
 
 useIntersectionObserver(
     target,
