@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import Heart from '../../assets/heart.svg';
+import {useStore} from "../../components/base/styleStore.ts";
+
+const store = useStore();
 </script>
 
 
 <template>
     <div class="header">
-        <div class="header__logo">
-            CyberSpark
+        <div :class="`header__logo container-title ${store.font} `">
+            <span>Cyber<br><span class="header__logo-float">Spark</span></span>
         </div>
         <div class="header__center">
         </div>
@@ -30,11 +32,15 @@ import Heart from '../../assets/heart.svg';
     width: 100vw;
     &__logo {
         border: 1px solid white;
-        padding: 24px 32px;
+        padding: 24px 0;
         height: 100px;
         display: flex;
         justify-content: center;
         align-items: center;
+        min-width: 20vw;
+        &-float {
+            margin-left: 20px;
+        }
     }
     &__center {
         border-bottom: 1px solid white;
