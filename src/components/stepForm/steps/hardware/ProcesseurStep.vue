@@ -15,7 +15,7 @@ const options = [
   { value: 'hyperthread', label: 'HyperThread Titan XJ-3', icon: 'src/components/stepForm/steps/hardware/hyperthread.jpg' }
 ];
 
-const updateAnim = (type) => {
+const updateAnim = (type:string) => {
   storeCss.setAnimation(type)
 }
 </script>

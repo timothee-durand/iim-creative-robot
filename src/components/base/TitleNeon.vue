@@ -1,6 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import {useStore} from "./styleStore.ts";
-import {ref, watch, watchEffect} from 'vue';
+import {ref, watch} from 'vue';
 
 const store = useStore();
 const isBlinking = ref(false);

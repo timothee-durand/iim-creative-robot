@@ -15,7 +15,7 @@ const options = [
   { value: 'cyborg', label: 'Cyborg', icon: 'src/components/stepForm/steps/type/cyborg.png' }
 ];
 
-const updateFont = (font) => {
+const updateFont = (font : string) => {
   storeCss.setFont(font);
 };
 </script>

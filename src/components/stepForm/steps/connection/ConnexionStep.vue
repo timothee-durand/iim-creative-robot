@@ -30,7 +30,7 @@ const options = [
   }
 ];
 
-const updateColor = (type) => {
+const updateColor = (type:string) => {
   storeCss.setBackground(type);
 };
 </script>
