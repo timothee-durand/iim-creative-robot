@@ -92,7 +92,7 @@ export default {
 
   methods: {
     startAnimation() {
-      const images = document.querySelectorAll('.card-container-all .svg-container .heart');
+      const images = Array.from(document.querySelectorAll('.card-container-all .svg-container .heart')) as HTMLElement[];
       images.forEach((image) => {
         const delay = Math.random() * 1500;
         let size = Math.random() * 100 + 50
@@ -120,9 +120,9 @@ export default {
       }, 3000);
     },
     anim() {
-      const heart = document.getElementById('like');
-      const container = document.getElementById('heart-container');
-      const text = document.getElementById('match-text');
+      const heart = document.getElementById('like') as HTMLElement;
+      const container = document.getElementById('heart-container') as HTMLElement
+      const text = document.getElementById('match-text') as HTMLElement;
       heart.classList.add('grow');
       setTimeout(() => {
         text.classList.add('anim');
