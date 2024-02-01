@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, ref} from "vue";
+import {computed, ref, watch} from "vue";
 import {formSteps} from "./formSteps.ts";
 import {useFormStepStore} from "./formStore.ts";
 import StepButton from "./StepButton.vue";
@@ -78,10 +78,27 @@ function startAnimation() {
 defineEmits<{
   (event: "submit"): void
 }>()
+
+const storeCss = useStore()
+const animationLevel = ref<'bad' | 'middle' | 'good'>('good')
+
+watch(storeCss, () => {
+  switch (storeCss.animation) {
+    case 'hyperthread':
+      animationLevel.value = 'good'
+      break
+    case 'virtusync':
+      animationLevel.value = 'middle'
+      break
+    case 'ecologic':
+      animationLevel.value = 'bad'
+      break
+  }
+})
 </script>
 
 <template>
-  <div class="step-form" :class="[`step-form--${mode}`]">
+<div class="step-form" :class="[`step-form--${mode}`, `step-form--${animationLevel}`]">
     <div class="step-form__steps">
       <transition name="step" mode="out-in">
         <component :is="currentStep"/>
@@ -101,6 +118,7 @@ defineEmits<{
             :fill="storeCss.background" :stroke="storeCss.background" stroke-width="2"/>
       </svg>
     </div>
+
   </div>
 </template>
 
@@ -109,6 +127,21 @@ defineEmits<{
 .step-leave-active {
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
+
+.step-form--bad {
+  .step-enter-active,
+  .step-leave-active {
+    transition: transform 1.5s ease, opacity 1.5s ease;
+  }
+}
+
+.step-form--middle {
+  .step-enter-active,
+  .step-leave-active {
+    transition: transform 0.8s ease, opacity 0.8s ease;
+  }
+}
+
 .step-enter-from,
 .step-leave-to {
   opacity: 0;

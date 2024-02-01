@@ -132,7 +132,7 @@ $track-radius: 25px !default;
     @include track;
     background: transparent;
     border-color: transparent;
-    border-width: ($thumb-height / 2) 0;
+    border-width: calc($thumb-height / 2) 0;
     color: transparent;
   }
 

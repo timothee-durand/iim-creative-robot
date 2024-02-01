@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import {useMouseInElement} from "@vueuse/core";
-import {computed, ref, watchEffect} from "vue";
+import {computed, ref, watch, watchEffect} from "vue";
 import {useStore} from "../../../base/styleStore.ts";
+import gsap from "gsap";
 
 const storeCss = useStore();
 
@@ -12,6 +13,51 @@ const props = defineProps<{
 }>()
 
 const circlePos = ref({x: 0, y: 0})
+const animationLevel = ref<'bad' | 'middle' | 'good'>('good')
+const neonRadius = ref<number>(4)
+
+
+const delayB = {
+  good: [1, 1],
+  middle: [0.3, 0.5],
+  bad: [0.1, 0.3]
+}
+function neonEffect() {
+  let dur = gsap.utils.random(0.1, 0.25)
+  let value = gsap.utils.random(0.1, 6)
+  let delay = gsap.utils.random(delayB[animationLevel.value][0], delayB[animationLevel.value][1])
+  gsap.to(neonRadius, {
+    duration: dur,
+    value: value,
+    ease: 'none',
+    delay: delay,
+    yoyo: true,
+    onComplete: () => {
+      if (animationLevel.value !== 'good') {
+        neonEffect()
+      } else {
+        neonRadius.value = 6
+      }
+    }
+  })
+}
+
+watch(storeCss, () => {
+  switch (storeCss.animation) {
+    case 'hyperthread':
+      animationLevel.value = 'good'
+        neonRadius.value = 6
+      break
+    case 'virtusync':
+      animationLevel.value = 'middle'
+        neonEffect()
+      break
+    case 'ecologic':
+      animationLevel.value = 'bad'
+        neonEffect()
+      break
+  }
+})
 
 defineEmits<{
   (e: 'update:modelValue', value: string): void
@@ -25,33 +71,45 @@ const isChecked = computed(() => {
 })
 
 const {elementX, elementY} = useMouseInElement(wrapper)
-const {elementX : bgElementX, elementY: bgElementY} = useMouseInElement(background)
+const {elementX: bgElementX, elementY: bgElementY} = useMouseInElement(background)
+
+const mousePos = ref({x: 0, y: 0})
 
 watchEffect(() => {
   if (!isChecked.value) {
     circlePos.value = {x: bgElementX.value, y: bgElementY.value}
   }
+  if(isChecked.value) {
+    gsap.to(mousePos.value, {
+      delay: animationLevel.value !== 'good' ? gsap.utils.random(delayB[animationLevel.value][0], delayB[animationLevel.value][1]) : 0,
+      duration: 0.1,
+      x: elementX.value,
+      y: elementY.value,
+      ease: 'none'
+    })
+  }
 })
 
 
 const style = computed(() => {
-  return  {
+  return {
     '--circle-pos-x': `${circlePos.value.x}px`,
     '--circle-pos-y': `${circlePos.value.y}px`,
-    '--mouse-x': `${elementX.value}px`,
-    '--mouse-y': `${elementY.value}px`,
+    '--mouse-x': `${mousePos.value.x}px`,
+    '--mouse-y': `${mousePos.value.y}px`,
+    '--color': storeCss.background,
   }
 })
 </script>
 
 <template>
-  <label class="step-radio" ref="wrapper" :style="style">
+  <label class="step-radio" ref="wrapper" :style="style" :class="[`step-radio--${animationLevel}`]">
     <svg width="300" height="250" viewBox="0 0 300 250" class="step-radio__foreground">
       <defs>
 
         <filter id="sofGlow" height="300%" width="300%" x="-75%" y="-75%">
           <!-- Thicken out the original shape -->
-          <feMorphology operator="dilate" radius="4" in="SourceAlpha" result="thicken"/>
+          <feMorphology operator="dilate" :radius="neonRadius" in="SourceAlpha" result="thicken"/>
 
           <!-- Use a gaussian blur to create the soft blurriness of the glow -->
           <feGaussianBlur in="thicken" stdDeviation="10" result="blurred"/>
@@ -110,6 +168,26 @@ const style = computed(() => {
   height: fit-content;
   position: relative;
 
+  &--bad {
+    .step-radio__foreground__background::before {
+      transition-duration: 5000ms;
+    }
+
+    .step-radio__border1 {
+      transition-duration: 4000ms;
+    }
+  }
+
+  &--middle {
+    .step-radio__foreground__background::before {
+      transition-duration: 2000ms;
+    }
+
+    .step-radio__border1 {
+      transition-duration: 1000ms;
+    }
+  }
+
 
   &__background, &__foreground {
     grid-area: 1/-1;
@@ -122,7 +200,7 @@ const style = computed(() => {
     justify-self: center;
     gap: 0.8rem;
 
-    &__background{
+    &__background {
       position: absolute;
       top: 20px;
       left: 30px;
@@ -152,7 +230,7 @@ const style = computed(() => {
     }
 
     .step-radio__foreground__background::before {
-      clip-path: circle(200% at var(--circle-pos-x) var(--circle-pos-y) );
+      clip-path: circle(200% at var(--circle-pos-x) var(--circle-pos-y));
     }
 
     .step-radio__icon {
