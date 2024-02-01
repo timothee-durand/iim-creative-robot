@@ -54,14 +54,33 @@ export default {
             }
         },
         swipeRightHandler() {
-            if (this.currentCardIndex > 0) {
-                const currentCardSelector = `.card:nth-child(${this.currentCardIndex + 1})`;
-                const currentCard = this.$el.querySelector(currentCardSelector) as HTMLElement;
-                currentCard.classList.add('rotate-left');
+            if (this.currentCardIndex < this.cards.length - 1) {
+                // Start animation for the current card
+                this.cards[this.currentCardIndex].isShrinking = true;
+
+                // Set isAnimating to true after the duration of the forward animation
                 setTimeout(() => {
-                    currentCard.classList.remove('rotate-left');
-                    this.currentCardIndex--;
-                }, 2000); // timeout should match transition duration
+                    this.isAnimating = true;
+                }, 500); // Duration of the forward animation
+                setTimeout(() => {
+                    this.isAnimating = false;
+                }, 2000); // Duration of the forward animation
+
+                setTimeout(() => {
+                    // End animation for the current card and increment index
+                    this.cards[this.currentCardIndex].isShrinking = false;
+                    this.currentCardIndex++;
+
+                    // Start reverse animation for the next card
+                    if (this.currentCardIndex < this.cards.length) {
+                        this.cards[this.currentCardIndex].isExpanding = true;
+                        
+                        setTimeout(() => {
+                            // End reverse animation for the next card
+                            this.cards[this.currentCardIndex].isExpanding = false;
+                        }, 1000); // Duration of the reverse animation
+                    }
+                }, 2000); // Duration of the forward animation
             }
         },
         tapHandler() {

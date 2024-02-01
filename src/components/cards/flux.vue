@@ -23,7 +23,7 @@ export default {
 
 <style scoped>
 .animated-path {
-  animation: path 0.5s ease-out infinite;
+  animation: path 0.5s ease-out infinite ;
 }
 #anim {
   stroke-dasharray: 160px;
