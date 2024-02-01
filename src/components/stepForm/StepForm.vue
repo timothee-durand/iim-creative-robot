@@ -4,6 +4,7 @@ import {formSteps} from "./formSteps.ts";
 import {useFormStepStore} from "./formStore.ts";
 import StepButton from "./StepButton.vue";
 import {useStore} from "../base/styleStore.ts";
+import TitleNeon from "../base/TitleNeon.vue";
 
 const currentStepIndex = ref<number>(0);
 const mode = ref<"next" | "previous">("next");
@@ -40,8 +41,8 @@ const currentStep = computed(() => {
 
 // Fonction pour démarrer l'animation
 const imageCount = computed(() => {
-  if(storeCss.animation === 'hyperthread') return 40
-  if(storeCss.animation === 'ecologic') return 5
+  if (storeCss.animation === 'hyperthread') return 40
+  if (storeCss.animation === 'ecologic') return 5
   return 20
 });
 
@@ -51,8 +52,8 @@ function startAnimation() {
   images.forEach((image) => {
     const delay = Math.random() * 1500;
     const size = ref(Math.random() * 100 + 50)
-    if(storeCss.size === 'var(--size-jack)') size.value = Math.random() * 50
-    if(storeCss.size === 'var(--size-rj45)') size.value = Math.random() * 500 + 50
+    if (storeCss.size === 'var(--size-jack)') size.value = Math.random() * 50
+    if (storeCss.size === 'var(--size-rj45)') size.value = Math.random() * 500 + 50
     const leftPosition = Math.random() * window.innerWidth;
     setTimeout(() => {
       image.style.transform = `rotate(${Math.random() * 360}deg)`;
@@ -94,10 +95,31 @@ watch(storeCss, () => {
       break
   }
 })
+
+const anim = () => {
+  const heart = document.getElementById('like');
+  const container = document.getElementById('heart-container');
+  const text = document.getElementById('match-text');
+  heart.classList.add('grow');
+  setTimeout(() => {
+    text.classList.add('anim');
+    setTimeout(() => {
+      startAnimation();
+      setTimeout(() => {
+        container.classList.add('fadeDiv');
+        setTimeout(() => {
+          heart.classList.remove('grow');
+          text.classList.remove('anim');
+          container.classList.remove('fadeDiv');
+        }, 5000)
+      }, 1000)
+    }, 2000)
+  }, 2000)
+}
 </script>
 
 <template>
-<div class="step-form" :class="[`step-form--${mode}`, `step-form--${animationLevel}`]">
+  <div class="step-form" :class="[`step-form--${mode}`, `step-form--${animationLevel}`]">
     <div class="step-form__steps">
       <transition name="step" mode="out-in">
         <component :is="currentStep"/>
@@ -108,16 +130,24 @@ watch(storeCss, () => {
       <StepButton type="button" @click="goToNextStep" v-if="hasNextStep" variant="solid">Next</StepButton>
       <StepButton type="button" @click="$emit('submit')" v-else :disabled="!store.isValid" variant="solid">Submit
       </StepButton>
+      <StepButton type="button" @click="anim" variant="solid">Submit</StepButton>
     </div>
     <div class="svg-container">
-      <svg v-for="index in imageCount" class="heart" :key="index" viewBox="0 0 59 54" fill="none"
+      <svg v-for="index in imageCount" class="heart" :key="index" viewBox="0 0 70 64" fill="none"
            xmlns="http://www.w3.org/2000/svg">
-        <path
-            d="M53.2509 29.6083L53.2522 29.6069L56.9992 17.7758L57.9992 17.7785C57.9992 17.7781 57.9992 17.7776 57.9992 17.7772C58.0112 13.3164 56.3399 9.11199 53.2755 5.94461C50.2102 2.77625 46.1394 1.03616 41.7949 1.03616C37.4491 1.03616 33.367 2.78916 30.3025 5.95666L29.5171 6.76848L28.7084 5.93256C25.6447 2.76592 21.5513 1 17.2044 1C12.8705 1 8.78833 2.75288 5.7354 5.90845C2.67236 9.07447 0.988047 13.2783 1.00006 17.741C1.00041 22.2044 2.6975 26.3946 5.75872 29.5587L27.6558 52.1919C28.1427 52.6952 28.8082 52.9787 29.4821 52.9787C30.1365 52.9787 30.8081 52.7212 31.3085 52.204L53.2509 29.6083ZM9.39803 9.61487L9.39981 9.61304C11.4891 7.45347 14.263 6.26603 17.2044 6.26603C20.1583 6.26603 22.9436 7.45408 25.044 9.62509L27.6791 12.3488C28.6901 13.3938 30.3325 13.3938 31.3435 12.3488L33.9553 9.64919C36.0561 7.4778 38.8415 6.29013 41.7832 6.29013C44.7236 6.29013 47.4982 7.47693 49.6001 9.63782C51.7002 11.8089 52.8511 14.6909 52.8511 17.7758L52.8511 17.7793C52.8618 20.8593 51.7018 23.7411 49.5998 25.914C49.5997 25.9141 49.5996 25.9143 49.5995 25.9144L29.4836 46.6251L9.41147 25.8782C7.30929 23.7054 6.1482 20.8224 6.1482 17.7396C6.1482 14.6539 7.29955 11.7728 9.39803 9.61487Z"
-            :fill="storeCss.background" :stroke="storeCss.background" stroke-width="2"/>
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M35 11.7807C28.8021 4.55802 18.4452 2.32589 10.6796 8.93972C2.9139 15.5536 1.82059 26.6115 7.91902 34.4338C12.9895 40.9372 28.3343 54.6541 33.3636 59.0937C33.926 59.5904 34.2075 59.8387 34.5357 59.9362C34.8219 60.0213 35.1354 60.0213 35.422 59.9362C35.7502 59.8387 36.0313 59.5904 36.5941 59.0937C41.6234 54.6541 56.968 40.9372 62.0386 34.4338C68.137 26.6115 67.177 15.484 59.2779 8.93972C51.3787 2.39546 41.198 4.55802 35 11.7807Z"
+              :stroke="storeCss.background" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
-
+    <div id="heart-container">
+      <svg id="like" width="70" height="64" viewBox="0 0 70 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M35 11.7807C28.8021 4.55802 18.4452 2.32589 10.6796 8.93972C2.9139 15.5536 1.82059 26.6115 7.91902 34.4338C12.9895 40.9372 28.3343 54.6541 33.3636 59.0937C33.926 59.5904 34.2075 59.8387 34.5357 59.9362C34.8219 60.0213 35.1354 60.0213 35.422 59.9362C35.7502 59.8387 36.0313 59.5904 36.5941 59.0937C41.6234 54.6541 56.968 40.9372 62.0386 34.4338C68.137 26.6115 67.177 15.484 59.2779 8.93972C51.3787 2.39546 41.198 4.55802 35 11.7807Z"
+              :stroke="storeCss.background" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <TitleNeon text="It's a match" tag="h2" id="match-text"/>
+    </div>
   </div>
 </template>
 
@@ -126,21 +156,18 @@ watch(storeCss, () => {
 .step-leave-active {
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
-
 .step-form--bad {
   .step-enter-active,
   .step-leave-active {
     transition: transform 1.5s ease, opacity 1.5s ease;
   }
 }
-
 .step-form--middle {
   .step-enter-active,
   .step-leave-active {
     transition: transform 0.8s ease, opacity 0.8s ease;
   }
 }
-
 .step-enter-from,
 .step-leave-to {
   opacity: 0;
@@ -185,7 +212,8 @@ watch(storeCss, () => {
   position: absolute;
   height: 100%;
   width: 100%;
-  z-index: -1;
+  z-index: 100;
+  pointer-events: none;
   .heart {
     visibility: hidden;
     top: -25%;
@@ -209,4 +237,65 @@ watch(storeCss, () => {
     visibility: hidden;
   }
 }
+// Animation coeur
+@keyframes growHeart {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(20);
+    opacity: 1;
+  }
+}
+@keyframes fadeInText {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeAnim {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.fadeDiv {
+  animation: fadeAnim 0.5s ease forwards;
+}
+#match-text {
+  position: fixed;
+  width: 100%;
+  top: 50%;
+  left: 75%;
+  opacity: 0;
+  font-size: 3rem;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 100;
+  &.anim {
+    animation: fadeInText 1s ease forwards;
+  }
+}
+#heart-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 45%;
+  pointer-events: none;
+}
+#like {
+  z-index: 100;
+  opacity: 0;
+  transform-origin: center;
+}
+#like.grow {
+  animation: growHeart 2s ease forwards;
+}
+
 </style>
