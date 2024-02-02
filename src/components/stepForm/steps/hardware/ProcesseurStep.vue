@@ -5,14 +5,18 @@ import RadioInput from "../components/RadioInput.vue";
 import TitleNeon from "../../../base/TitleNeon.vue";
 import {useStore} from "../../../base/styleStore.ts";
 
+
+import EcologicImg from './ecologic.jpg'
+import VirtusyncImg from './virtusync.jpg'
+import HyperthreadImg from './hyperthread.jpg'
 const store = useFormStepStore()
 const storeCss = useStore()
 const NAME = 'processeur'
 
 const options = [
-  { value: 'ecologic', label: 'Eco-Logic', icon: 'src/components/stepForm/steps/hardware/ecologic.jpg' },
-  { value: 'virtusync', label: 'VirtuSync PentaCore 360', icon: 'src/components/stepForm/steps/hardware/virtusync.jpg' },
-  { value: 'hyperthread', label: 'HyperThread Titan XJ-3', icon: 'src/components/stepForm/steps/hardware/hyperthread.jpg' }
+  { value: 'ecologic', label: 'Eco-Logic', icon: EcologicImg },
+  { value: 'virtusync', label: 'VirtuSync PentaCore 360', icon: VirtusyncImg },
+  { value: 'hyperthread', label: 'HyperThread Titan XJ-3', icon: HyperthreadImg }
 ];
 
 const updateAnim = (type:string) => {

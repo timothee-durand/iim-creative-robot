@@ -5,14 +5,18 @@ import RadioInput from "../components/RadioInput.vue";
 import TitleNeon from "../../../base/TitleNeon.vue";
 import {useStore} from "../../../base/styleStore.ts";
 
+import Rj45Img from './rj45.svg'
+import JackImg from './jack.svg'
+import UsbImg from './usb.svg'
+
 const store = useFormStepStore()
 const storeCss = useStore()
 const NAME = 'connexion'
 
 const options = [
-  { value: 'rj45', label: 'RJ45', icon: 'src/components/stepForm/steps/port/rj45.svg' },
-  { value: 'jack', label: 'Jack', icon: 'src/components/stepForm/steps/port/jack.svg' },
-  { value: 'usb', label: 'USB', icon: 'src/components/stepForm/steps/port/usb.svg' }
+  { value: 'rj45', label: 'RJ45', icon: Rj45Img },
+  { value: 'jack', label: 'Jack', icon: JackImg },
+  { value: 'usb', label: 'USB', icon: UsbImg }
 ];
 
 const updatePort = (port : string) => {

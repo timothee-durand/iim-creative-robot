@@ -5,14 +5,18 @@ import RadioInput from "../components/RadioInput.vue";
 import {useStore} from "../../../base/styleStore.ts";
 import TitleNeon from "../../../base/TitleNeon.vue";
 
+import HumanImg from './human.png'
+import RobotImg from './robot.png'
+import CyborgImg from './cyborg.png'
+
 const store = useFormStepStore()
 const storeCss = useStore();
 const NAME = 'type'
 
 const options = [
-  { value: 'human', label: 'Humanoïde', icon: 'src/components/stepForm/steps/type/human.png' },
-  { value: 'ia', label: 'IA', icon: 'src/components/stepForm/steps/type/robot.png' },
-  { value: 'cyborg', label: 'Cyborg', icon: 'src/components/stepForm/steps/type/cyborg.png' }
+  { value: 'human', label: 'Humanoïde', icon: HumanImg },
+  { value: 'ia', label: 'IA', icon: RobotImg },
+  { value: 'cyborg', label: 'Cyborg', icon: CyborgImg }
 ];
 
 const updateFont = (font : string) => {

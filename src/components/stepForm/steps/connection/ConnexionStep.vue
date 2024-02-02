@@ -5,6 +5,10 @@ import RadioInput from "../components/RadioInput.vue";
 import TitleNeon from "../../../base/TitleNeon.vue";
 import {useStore} from "../../../base/styleStore.ts";
 
+import WifiImg from './wifi.svg'
+import BluetoothImg from './bluetooth.svg'
+import CableImg from './cable.svg'
+
 const store = useFormStepStore()
 const storeCss = useStore();
 const NAME = 'connexion'
@@ -13,19 +17,19 @@ const options = [
   {
     value: 'wifi',
     label: 'Wifi',
-    icon: 'src/components/stepForm/steps/connection/wifi.svg',
+    icon: WifiImg,
     subText: 'For a stable long-term connection'
   },
   {
     value: 'bluetooth',
     label: 'Bluetooth',
-    icon: 'src/components/stepForm/steps/connection/bluetooth.svg',
+    icon: BluetoothImg,
     subText: 'For an unsecure short-term connection'
   },
   {
     value: 'wired',
     label: 'Wired',
-    icon: 'src/components/stepForm/steps/connection/cable.svg',
+    icon: CableImg,
     subText: 'Watch out for the virus'
   }
 ];
