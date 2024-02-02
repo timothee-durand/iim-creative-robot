@@ -290,7 +290,7 @@ export default {
   transition: transform 0.3s ease;
   padding: 23px; /* Adjust padding as needed */
   user-select: none;
-  background: url('./border.svg') no-repeat center center; /* Path to your SVG */
+  background: url('/border.svg') no-repeat center center; /* Path to your SVG */
   background-size: 100% 100%; /* Make the SVG fit the container */
 }
 
